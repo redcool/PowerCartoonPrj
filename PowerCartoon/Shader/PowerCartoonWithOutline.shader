@@ -7,7 +7,7 @@ Shader "Character/PowerCartoon With Outline"
         _NormalMap("_NormalMap",2d) = "bump"{}
         _NormalScale("_NormalScale",float) = 1
 
-        [HeLineHeaderader(PBR Mask)]
+        [LineHeader(PBR Mask)]
         _PBRMask("_PBRMask(Metallix:r,Smoothness:g,Occlusion:b)",2d) = "white"{}
         _Metallic("_Metallic",range(0,1)) = 0.5
         _Smoothness("_Smoothness",range(0,1)) = 0.5
