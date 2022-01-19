@@ -20,9 +20,6 @@ Shader "Character/PowerCartoon With Outline"
         _DiffuseStepMin("_DiffuseStepMin",range(0,1)) = 0
         _DiffuseStepMax("_DiffuseStepMax",range(0,1)) = 1
 
-        _SpecStepMin("_SpecStepMin",range(0,1)) = 0
-        _SpecStepMax("_SpecStepMax",range(0,1)) = 1
-
         [LineHeader(PreSSS)]
         [Toggle(_PRESSS)]_ScatterOn("_Scatter",float) = 0
         _ScatterLUT("_ScatterLUT",2d) = "white"{}

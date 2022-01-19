@@ -55,7 +55,6 @@ half4 unity_SpecCube0_HDR;
 half _NormalScale;
 
 half _DiffuseMin,_DiffuseStepMin,_DiffuseStepMax;
-half _SpecStepMax,_SpecStepMin;
 
 half _ScatterCurve,_ScatterIntensity,_PreScatterMaskUseMainTexA;
 
@@ -90,14 +89,12 @@ half4 frag (v2f i) : SV_Target
     // pbr
     half nv = saturate(dot(n,v));
     half nh = saturate(dot(n,h));
-    // half smoothNH = smoothstep(_SpecStepMin,_SpecStepMax,nh);
     half lh = saturate(dot(l,h));
 
     // pbrmask
     half4 pbrMask = tex2D(_PBRMask,i.uv);
 
     half smoothness = _Smoothness * pbrMask.y;
-    // smoothness = smoothstep(_SpecStepMin,_SpecStepMax,smoothness);
     half roughness = 1 - smoothness;
 
     half a = max(roughness * roughness, HALF_MIN_SQRT);
