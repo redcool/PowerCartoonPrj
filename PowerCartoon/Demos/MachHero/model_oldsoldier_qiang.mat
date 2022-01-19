@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: model_oldsoldier_qiang
   m_Shader: {fileID: 4800000, guid: e1bc73a9f8715f349b2028fe0be7d16b, type: 3}
-  m_ShaderKeywords: 
+  m_ShaderKeywords: _PRESSS
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -48,7 +48,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 6de32e634aa79754082e667eec4caa4e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -64,7 +64,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ScatterLUT:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 8483ece466ce80c41a09522d4b85e265, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
@@ -72,8 +72,8 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DiffuseMin: 0.1
-    - _DiffuseStepMax: 1
-    - _DiffuseStepMin: 0
+    - _DiffuseStepMax: 0.544
+    - _DiffuseStepMin: 0.412
     - _DstBlend: 0
     - _GlossMapScale: 1
     - _Glossiness: 0
@@ -88,11 +88,13 @@ Material:
     - _RimOn: 0
     - _RimStepMax: 1
     - _RimStepMin: 0
-    - _ScatterCurve: 0
+    - _ScatterCurve: 1
     - _ScatterIntensity: 1
-    - _ScatterOn: 0
-    - _Smoothness: 0.5
+    - _ScatterOn: 1
+    - _Smoothness: 0.555
     - _SmoothnessTextureChannel: 0
+    - _SpecStepMax: 1
+    - _SpecStepMin: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0

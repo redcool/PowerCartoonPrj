@@ -1,4 +1,4 @@
-Shader "Character/PowerCartoon"
+Shader "Character/PowerCartoon With Outline"
 {
     Properties
     {
@@ -39,6 +39,11 @@ Shader "Character/PowerCartoon"
         [LineHeader(Custom Light View)]
         _LightDirOffset("_LightDirOffset",vector)=(0,0,0,0)
         _ViewDirOffset("_ViewDirOffset",vector) = (0,0,0,0)
+
+        [LineHeader(Outline Pass)]
+        _OutlineTex("_OutlineTex",2d) = "white"{}
+        _Color("_Color",color)  =(1,1,1,1)
+        _Width("_Width",range(0.002,.1)) = 0.01
     }
     SubShader
     {
@@ -53,10 +58,20 @@ Shader "Character/PowerCartoon"
             #pragma shader_feature_local_fragment _PRESSS
             #pragma shader_feature_local_fragment _RIMON
 
+            #define DRP
             #include "Lib/ForwardPass.hlsl"
             
             ENDHLSL
         }
 
+        Pass{
+            cull front
+            HLSLPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            
+            #include "Lib/OutlineOnlyPass.hlsl"
+            ENDHLSL
+        }
     }
 }
