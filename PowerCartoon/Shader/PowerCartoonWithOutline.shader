@@ -41,7 +41,7 @@ Shader "Character/PowerCartoon With Outline"
         _ViewDirOffset("_ViewDirOffset",vector) = (0,0,0,0)
 
         [LineHeader(Outline Pass)]
-        _OutlineTex("_OutlineTex",2d) = "white"{}
+        _OutlineTex("_OutlineTex(A:Outline Mask)",2d) = "white"{}
         _Color("_Color",color)  =(1,1,1,1)
         _Width("_Width",range(0.002,.1)) = 0.01
     }
@@ -66,6 +66,8 @@ Shader "Character/PowerCartoon With Outline"
 
         Pass{
             cull front
+            Tags{"RenderQueue"="Transparent"}
+            Blend SrcAlpha OneMinusSrcAlpha
             HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag
