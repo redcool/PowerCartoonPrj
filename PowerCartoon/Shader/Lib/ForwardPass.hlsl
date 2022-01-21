@@ -54,7 +54,7 @@ half4 unity_SpecCube0_HDR;
 
 half _NormalScale;
 
-half _DiffuseMin,_DiffuseStepMin,_DiffuseStepMax;
+half _DiffuseMin,_DiffuseStepMin,_DiffuseStepMax,_DiffuseStepCount;
 
 half _ScatterCurve,_ScatterIntensity,_PreScatterMaskUseMainTexA;
 
@@ -83,7 +83,16 @@ half4 frag (v2f i) : SV_Target
     half3 h = normalize(l+v);
     half nl = saturate(dot(n,l));
     half originalNL = nl;
-    nl = smoothstep(_DiffuseStepMin,_DiffuseStepMax,nl);
+
+    // diffuse smooth
+    // nl = smoothstep(_DiffuseStepMin,_DiffuseStepMax,nl);
+    // diffuse step smooth
+    half idNL = floor(nl * _DiffuseStepCount);
+    half idF = frac(nl * _DiffuseStepCount);
+    nl = lerp(idNL,idNL+1,smoothstep(_DiffuseStepMin,_DiffuseStepMax,idF))/ _DiffuseStepCount;
+    // return nl;
+
+    
     nl = max(_DiffuseMin,nl);
 
     // pbr

@@ -17,8 +17,11 @@ Shader "Character/PowerCartoon With Outline"
         _DiffuseMin("_DiffuseMin",range(0,1)) = 0.1
 
         [LineHeader(Diffuse Step)]
-        _DiffuseStepMin("_DiffuseStepMin",range(0,1)) = 0
-        _DiffuseStepMax("_DiffuseStepMax",range(0,1)) = 1
+        _DiffuseStepMin("_DiffuseStepMin",range(0,1)) = 0.1
+        _DiffuseStepMax("_DiffuseStepMax",range(0,1)) = 0.3
+
+        [IntRange]_DiffuseStepCount("_DiffuseStepCount",range(1,5)) = 1
+
 
         [LineHeader(PreSSS)]
         [Toggle(_PRESSS)]_ScatterOn("_Scatter",float) = 0
