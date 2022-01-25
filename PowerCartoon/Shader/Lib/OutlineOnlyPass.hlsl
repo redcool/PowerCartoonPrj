@@ -24,7 +24,7 @@ v2f vert (appdata v)
 {
     v2f o;
     o.vertex = UnityObjectToClipPos(v.vertex);
-    
+    o.vertex.z = 0;
     float3 worldNormal = UnityObjectToWorldNormal(v.normal);
     float3 normalClip = mul((float3x3)UNITY_MATRIX_VP,worldNormal);
 

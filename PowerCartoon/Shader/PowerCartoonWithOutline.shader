@@ -66,8 +66,8 @@ Shader "Character/PowerCartoon With Outline"
 
         Pass{
             cull front
-            Tags{"RenderQueue"="Transparent"}
-            Blend SrcAlpha OneMinusSrcAlpha
+            // Tags{"RenderQueue"="Transparent"}
+            // Blend SrcAlpha OneMinusSrcAlpha
             HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag
