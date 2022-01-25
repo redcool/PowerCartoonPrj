@@ -43,7 +43,7 @@ Shader "Character/PowerCartoon With Outline"
         [LineHeader(Outline Pass)]
         _OutlineTex("_OutlineTex(A:Outline Mask)",2d) = "white"{}
         _Color("_Color",color)  =(1,1,1,1)
-        _Width("_Width",range(0.002,.1)) = 0.01
+        _Width("_Width",range(0.002,.01)) = 0.003
     }
     SubShader
     {
