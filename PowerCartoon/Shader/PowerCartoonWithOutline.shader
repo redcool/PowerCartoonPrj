@@ -47,7 +47,6 @@ Shader "Character/PowerCartoon With Outline"
     }
     SubShader
     {
-
         Pass
         {
             Tags{"LightMode"="ForwardBase"}
@@ -65,9 +64,10 @@ Shader "Character/PowerCartoon With Outline"
         }
 
         Pass{
-            cull front
+            // cull front
             // Tags{"RenderQueue"="Transparent"}
             // Blend SrcAlpha OneMinusSrcAlpha
+            // zwrite off
             HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag
@@ -75,5 +75,6 @@ Shader "Character/PowerCartoon With Outline"
             #include "Lib/OutlineOnlyPass.hlsl"
             ENDHLSL
         }
+
     }
 }
