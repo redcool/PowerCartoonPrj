@@ -8,7 +8,7 @@ Shader "Unlit/OutlineOnly"
     }
     SubShader
     {
-        Tags { "RenderType"="Opaque" }
+        Tags { "RenderType"="Opaque"}
         LOD 100
 
         Pass
@@ -17,12 +17,14 @@ Shader "Unlit/OutlineOnly"
             // ztest greater
             // zwrite off
 
-            CGPROGRAM
+            HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag
 
             #include "Lib/OutlineOnlyPass.hlsl"
-            ENDCG
+            ENDHLSL
         }
+
+        UsePass "Universal Render Pipeline/Unlit/DEPTHONLY"
     }
 }
