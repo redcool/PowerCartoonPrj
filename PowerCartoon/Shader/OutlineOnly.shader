@@ -8,14 +8,15 @@ Shader "Unlit/OutlineOnly"
     }
     SubShader
     {
-        Tags { "RenderType"="Opaque"}
+        Tags { "RenderType"="Transparent" "Queue"="Transparent"}
         LOD 100
+        blend srcAlpha oneMinusSrcAlpha
 
         Pass
         {
             cull front
             // ztest greater
-            // zwrite off
+            zwrite off
 
             HLSLPROGRAM
             #pragma vertex vert
@@ -25,6 +26,6 @@ Shader "Unlit/OutlineOnly"
             ENDHLSL
         }
 
-        UsePass "Universal Render Pipeline/Unlit/DEPTHONLY"
+        // UsePass "Universal Render Pipeline/Unlit/DEPTHONLY"
     }
 }
