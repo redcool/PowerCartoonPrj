@@ -5,6 +5,8 @@ Shader "Unlit/OutlineOnly"
         _OutlineTex("_OutlineTex",2d) = "white"{}
         _Color("_Color",color)  =(1,1,1,1)
         _Width("_Width",range(0.002,.1)) = 0.01
+
+        [Toggle(_VERTEX_COLOR_ATTEN)]_VertexColorAtten("_VertexColorAtten",float) = 0
     }
     SubShader
     {
@@ -21,6 +23,7 @@ Shader "Unlit/OutlineOnly"
             HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag
+            #pragma shader_feature_local _VERTEX_COLOR_ATTEN
 
             #include "Lib/OutlineOnlyPass.hlsl"
             ENDHLSL
