@@ -23,7 +23,10 @@ CBUFFER_START(UnityPerMaterial)
 half _Width;
 half4 _Color;
 half4 _OutlineTex_ST;
+half _VertexColorAttenOn;
 CBUFFER_END
+
+#define MUL_VERTEX_COLOR_ATTEN(v) (_VertexColorAttenOn? v.color.x : 1)
 
 v2f vert (appdata v)
 {
@@ -32,12 +35,8 @@ v2f vert (appdata v)
     // o.vertex.z *= 0.9;
     half3 worldNormal = TransformObjectToWorldNormal(v.normal);
     half3 normalClip = mul((half3x3)UNITY_MATRIX_VP,worldNormal);
-    
-    #if defined(_VERTEX_COLOR_ATTEN)
-    o.vertex.xy += normalClip.xy * _Width * o.vertex.w * v.color.x;
-    #else
-    o.vertex.xy += normalClip.xy * _Width * o.vertex.w;
-    #endif
+        
+    o.vertex.xy += normalClip.xy * _Width * o.vertex.w * MUL_VERTEX_COLOR_ATTEN(v);
 
     o.color = v.color;
     o.uv= TRANSFORM_TEX(v.uv,_OutlineTex);
@@ -47,10 +46,7 @@ v2f vert (appdata v)
 
 half4 frag (v2f i) : SV_Target
 {
-    half4 col = tex2D(_OutlineTex,i.uv) * _Color;
-    #if defined(_VERTEX_COLOR_ATTEN)
-    col *= i.color.x;
-    #endif
+    half4 col = tex2D(_OutlineTex,i.uv) * _Color * MUL_VERTEX_COLOR_ATTEN(i);
     return col;
 }
 #endif //OUTLINE_ONLY_PASS_HLSL

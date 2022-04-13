@@ -6,13 +6,18 @@ Shader "Unlit/OutlineOnly"
         _Color("_Color",color)  =(1,1,1,1)
         _Width("_Width",range(0.002,.1)) = 0.01
 
-        [Toggle(_VERTEX_COLOR_ATTEN)]_VertexColorAtten("_VertexColorAtten",float) = 0
+        [Header(Atten)]
+        [Toggle(_VERTEX_COLOR_ATTEN)]_VertexColorAttenOn("_VertexColorAttenOn",float) = 1
+
+        [Header(Blend)]
+        [Enum(UnityEngine.Rendering.BlendMode)]_SrcMode("_SrcMode",int) = 5
+        [Enum(UnityEngine.Rendering.BlendMode)]_DstMode("_DstMode",int) = 10
     }
     SubShader
     {
         Tags { "RenderType"="Transparent" "Queue"="Transparent"}
         LOD 100
-        blend srcAlpha oneMinusSrcAlpha
+        blend [_SrcMode][_DstMode]
 
         Pass
         {
