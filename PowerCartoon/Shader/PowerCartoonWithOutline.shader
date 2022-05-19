@@ -19,7 +19,6 @@ Shader "Character/PowerCartoon With Outline"
         [LineHeader(Diffuse Step)]
         _DiffuseStepMin("_DiffuseStepMin",range(0,1)) = 0.1
         _DiffuseStepMax("_DiffuseStepMax",range(0,1)) = 0.3
-
         [IntRange]_DiffuseStepCount("_DiffuseStepCount",range(1,5)) = 1
 
 
@@ -49,7 +48,7 @@ Shader "Character/PowerCartoon With Outline"
     {
         Pass
         {
-            Tags{"LightMode"="ForwardBase"}
+            // Tags{"LightMode"="ForwardBase"}
             HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag

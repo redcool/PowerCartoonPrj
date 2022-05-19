@@ -23,7 +23,7 @@ Shader "Unlit/OutlineOnly"
         {
             cull front
             // ztest greater
-            zwrite off
+            // zwrite off
 
             HLSLPROGRAM
             #pragma vertex vert

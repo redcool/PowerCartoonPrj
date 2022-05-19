@@ -19,6 +19,7 @@ Shader "Character/PowerCartoon"
         [LineHeader(Diffuse Step)]
         _DiffuseStepMin("_DiffuseStepMin",range(0,1)) = 0
         _DiffuseStepMax("_DiffuseStepMax",range(0,1)) = 1
+        [IntRange]_DiffuseStepCount("_DiffuseStepCount",range(1,5)) = 1
 
         [LineHeader(PreSSS)]
         [Toggle(_PRESSS)]_ScatterOn("_Scatter",float) = 0
@@ -36,16 +37,25 @@ Shader "Character/PowerCartoon"
         [LineHeader(Custom Light View)]
         _LightDirOffset("_LightDirOffset",vector)=(0,0,0,0)
         _ViewDirOffset("_ViewDirOffset",vector) = (0,0,0,0)
+
+        [LineHeader(Shadow )]
+        [Toggle]_ReceiveShadow("_ReceiveShadow",int) = 1
+        _MainLightShadowSoftScale("_MainLightShadowSoftScale",Range(0,2))=0.1
+        _CustomShadowDepthBias("_CustomShadowDepthBias",range(-1,1)) = 0
+        _CustomShadowNormalBias("_CustomShadowNormalBias",range(-1,1)) = 0
     }
     SubShader
     {
 
         Pass
         {
-            Tags{"LightMode"="ForwardBase"}
+            // Tags{"LightMode"="ForwardBase"}
             HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag
+
+            #pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
+            #pragma multi_compile_fragment _ _ADDITIONAL_LIGHTS_ON
 
             #pragma shader_feature_local_fragment _PRESSS
             #pragma shader_feature_local_fragment _RIMON
@@ -55,5 +65,36 @@ Shader "Character/PowerCartoon"
             ENDHLSL
         }
 
+        Pass{
+            Tags{"LightMode" = "ShadowCaster"}
+
+            // ZWrite On
+            // ZTest LEqual
+            ColorMask 0
+            HLSLPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag 
+            
+            #pragma multi_compile_vertex _ _CASTING_PUNCTUAL_LIGHT_SHADOW
+
+            #define SHADOW_PASS 
+            #include "Lib/ShadowCasterPass.hlsl"
+
+            ENDHLSL
+        }
+        Pass{
+            Tags{"LightMode" = "DepthOnly"}
+
+            // ZWrite On
+            // ZTest LEqual
+            ColorMask 0
+            HLSLPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag 
+
+            #include "Lib/ShadowCasterPass.hlsl"
+
+            ENDHLSL
+        }
     }
 }

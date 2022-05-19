@@ -1,8 +1,10 @@
 #if !defined(FORWARD_PASS_HLSL)
 #define FORWARD_PASS_HLSL
 
-#include "UnityLib.hlsl"
+#include "PBRInput.hlsl"
 #include "BSDF.hlsl"
+
+#include "URP_MainLightShadows.hlsl"
 
 struct appdata
 {
@@ -20,7 +22,8 @@ struct v2f
     float4 tSpace1:TEXCOORD2;
     float4 tSpace2:TEXCOORD3;
 
-    half3 tangent:TEXCOORD4;
+    half4 shadowCoord:TEXCOORD4;
+
 };
 
 v2f vert (appdata v)
@@ -37,39 +40,19 @@ v2f vert (appdata v)
     o.tSpace0 = half4(t.x,b.x,n.x,worldPos.x);
     o.tSpace1 = half4(t.y,b.y,n.y,worldPos.y);
     o.tSpace2 = half4(t.z,b.z,n.z,worldPos.z);
+
+    o.shadowCoord = TransformWorldToShadowCoord(worldPos);
     return o;
 }
 
-sampler2D _MainTex;
-sampler2D _PBRMask;
-samplerCUBE unity_SpecCube0;
-sampler2D _NormalMap;
-sampler2D _ScatterLUT;
 
-CBUFFER_START(UnityPerMaterial)
-half _Smoothness, _Metallic,_Occlusion;
-
-
-half4 unity_SpecCube0_HDR;
-
-half _NormalScale;
-
-half _DiffuseMin,_DiffuseStepMin,_DiffuseStepMax,_DiffuseStepCount;
-
-half _ScatterCurve,_ScatterIntensity,_PreScatterMaskUseMainTexA;
-
-half4 _RimColor;
-half _RimStepMin,_RimStepMax;
-
-half3 _LightDirOffset,_ViewDirOffset;
-CBUFFER_END
 
 half4 frag (v2f i) : SV_Target
 {
     half3 vertexTangent = (half3(i.tSpace0.x,i.tSpace1.x,i.tSpace2.x));
     half3 vertexBinormal = normalize(half3(i.tSpace0.y,i.tSpace1.y,i.tSpace2.y));
     half3 vertexNormal = normalize(half3(i.tSpace0.z,i.tSpace1.z,i.tSpace2.z));
-    half3 tn = UnpackScaleNormal(tex2D(_NormalMap,i.uv),_NormalScale);
+    half3 tn = UnpackNormalScale(tex2D(_NormalMap,i.uv),_NormalScale);
 
     half3 n = normalize(half3(
         dot(i.tSpace0.xyz,tn),
@@ -78,6 +61,10 @@ half4 frag (v2f i) : SV_Target
     ));
 
     half3 worldPos = half3(i.tSpace0.w,i.tSpace1.w,i.tSpace2.w);
+
+    // i.shadowCoord = TransformWorldToShadowCoord(worldPos);
+    half shadowAtten = CalcShadow(i.shadowCoord,worldPos,0);
+
     half3 l = GetWorldSpaceLightDir(worldPos) + _LightDirOffset;
     half3 v = normalize(GetWorldSpaceViewDir(worldPos) + _ViewDirOffset);
     half3 h = normalize(l+v);
@@ -135,7 +122,7 @@ half4 frag (v2f i) : SV_Target
     half4 col = 0;
     col.xyz = (giDiff + giSpec) * occlusion;
 
-    half3 radiance = nl * _MainLightColor.xyz;
+    half3 radiance = nl * _MainLightColor.xyz * shadowAtten;
     half specTerm = MinimalistCookTorrance(nh,lh,a,a2);
     col.xyz += (diffColor + specColor * specTerm) * radiance;
 

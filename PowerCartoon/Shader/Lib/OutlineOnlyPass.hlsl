@@ -36,7 +36,7 @@ v2f vert (appdata v)
     half3 worldNormal = TransformObjectToWorldNormal(v.normal);
     half3 normalClip = mul((half3x3)UNITY_MATRIX_VP,worldNormal);
         
-    o.vertex.xy += normalClip.xy * _Width * o.vertex.w * MUL_VERTEX_COLOR_ATTEN(v);
+    o.vertex.xy += normalClip.xy * _Width * o.vertex.w * MUL_VERTEX_COLOR_ATTEN(v)*0.1;
 
     o.color = v.color;
     o.uv= TRANSFORM_TEX(v.uv,_OutlineTex);
