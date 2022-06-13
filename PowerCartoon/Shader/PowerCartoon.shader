@@ -2,43 +2,43 @@ Shader "Character/PowerCartoon"
 {
     Properties
     {
-        [LineHeader(Main )]
+        [Header(Main )]
         _MainTex ("Texture", 2D) = "white" {}
         _NormalMap("_NormalMap",2d) = "bump"{}
         _NormalScale("_NormalScale",float) = 1
 
-        [LineHeader(PBR Mask)]
+        [Header(PBR Mask)]
         _PBRMask("_PBRMask(Metallix:r,Smoothness:g,Occlusion:b)",2d) = "white"{}
         _Metallic("_Metallic",range(0,1)) = 0.5
         _Smoothness("_Smoothness",range(0,1)) = 0.5
         _Occlusion("_Occlusion",range(0,1)) = 0
 
-        [LineHeader(Ambient)]
+        [Header(Ambient)]
         _DiffuseMin("_DiffuseMin",range(0,1)) = 0.1
 
-        [LineHeader(Diffuse Step)]
+        [Header(Diffuse Step)]
         _DiffuseStepMin("_DiffuseStepMin",range(0,1)) = 0
         _DiffuseStepMax("_DiffuseStepMax",range(0,1)) = 1
         [IntRange]_DiffuseStepCount("_DiffuseStepCount",range(1,5)) = 1
 
-        [LineHeader(PreSSS)]
+        [Header(PreSSS)]
         [Toggle(_PRESSS)]_ScatterOn("_Scatter",float) = 0
         _ScatterLUT("_ScatterLUT",2d) = "white"{}
         _ScatterCurve("_ScatterCurve",range(0,1)) = 0
         _ScatterIntensity("_ScatterIntensity",float) = 1
         [Toggle]_PreScatterMaskUseMainTexA("_PreScatterMaskUseMainTexA",float) = 0
 
-        [LineHeader(Rim)]
+        [Header(Rim)]
         [Toggle(_RIMON)]_RimOn("_RimOn",int) = 0
         _RimColor("_RimColor",color) = (1,1,1,1)
         _RimStepMin("_RimStepMin",range(0,1)) = 0
         _RimStepMax("_RimStepMax",range(0,1)) = 1
 
-        [LineHeader(Custom Light View)]
+        [Header(Custom Light View)]
         _LightDirOffset("_LightDirOffset",vector)=(0,0,0,0)
         _ViewDirOffset("_ViewDirOffset",vector) = (0,0,0,0)
 
-        [LineHeader(Shadow )]
+        [Header(Shadow )]
         [Toggle]_ReceiveShadow("_ReceiveShadow",int) = 1
         _MainLightShadowSoftScale("_MainLightShadowSoftScale",Range(0,2))=0.1
         _CustomShadowDepthBias("_CustomShadowDepthBias",range(-1,1)) = 0
@@ -49,7 +49,7 @@ Shader "Character/PowerCartoon"
 
         Pass
         {
-            // Tags{"LightMode"="ForwardBase"}
+            Tags{"LightMode"="UniversalForward"}
             HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag

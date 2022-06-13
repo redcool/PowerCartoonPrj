@@ -24,6 +24,7 @@ half _Width;
 half4 _Color;
 half4 _OutlineTex_ST;
 half _VertexColorAttenOn;
+half _ShowPolyEdge;
 CBUFFER_END
 
 #define MUL_VERTEX_COLOR_ATTEN(v) (_VertexColorAttenOn? v.color.x : 1)
@@ -32,10 +33,10 @@ v2f vert (appdata v)
 {
     v2f o;
     o.vertex = TransformObjectToHClip(v.vertex.xyz);
-    // o.vertex.z *= 0.9;
+    o.vertex.z *= _ShowPolyEdge ? 0.9 : 1;
     half3 worldNormal = TransformObjectToWorldNormal(v.normal);
     half3 normalClip = mul((half3x3)UNITY_MATRIX_VP,worldNormal);
-        
+    
     o.vertex.xy += normalClip.xy * _Width * o.vertex.w * MUL_VERTEX_COLOR_ATTEN(v)*0.1;
 
     o.color = v.color;

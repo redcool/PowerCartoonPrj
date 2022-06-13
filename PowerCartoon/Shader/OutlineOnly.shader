@@ -12,6 +12,9 @@ Shader "Unlit/OutlineOnly"
         [Header(Blend)]
         [Enum(UnityEngine.Rendering.BlendMode)]_SrcMode("_SrcMode",int) = 5
         [Enum(UnityEngine.Rendering.BlendMode)]_DstMode("_DstMode",int) = 10
+
+        [Header(Poly Edge)]
+        [GroupToggle]_ShowPolyEdge("_ShowPolyEdge",int) = 0
     }
     SubShader
     {

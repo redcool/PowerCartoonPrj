@@ -8,8 +8,8 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 07 - Default
-  m_Shader: {fileID: 4800000, guid: 202b6964f2f613244bea189e3ccb6044, type: 3}
-  m_ShaderKeywords: _PRESSS
+  m_Shader: {fileID: 4800000, guid: e1bc73a9f8715f349b2028fe0be7d16b, type: 3}
+  m_ShaderKeywords: _PRESSS _RECEIVESHADOW_ON _RIMON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -73,28 +73,32 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _BumpScale: 1
+    - _CustomShadowDepthBias: 0
+    - _CustomShadowNormalBias: 0
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
-    - _DiffuseMin: 0
+    - _DiffuseMin: 0.418
     - _DiffuseStepCount: 1
-    - _DiffuseStepMax: 0.28
-    - _DiffuseStepMin: 0.002
+    - _DiffuseStepMax: 0.286
+    - _DiffuseStepMin: 0.198
     - _DstBlend: 0
     - _GlossMapScale: 1
     - _Glossiness: 0
     - _GlossyReflections: 1
-    - _Metallic: 0.573
+    - _MainLightShadowSoftScale: 0.72
+    - _Metallic: 0.967
     - _Mode: 0
     - _NormalScale: 0.1
-    - _Occlusion: 0
+    - _Occlusion: 0.266
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _PreScatterMaskUseMainTexA: 0
-    - _RimOn: 0
+    - _ReceiveShadow: 1
+    - _RimOn: 1
     - _RimStepMax: 1
-    - _RimStepMin: 0.391
-    - _ScatterCurve: 0.673
-    - _ScatterIntensity: 2
+    - _RimStepMin: 0
+    - _ScatterCurve: 1
+    - _ScatterIntensity: 2.11
     - _ScatterOn: 1
     - _Smoothness: 1
     - _SmoothnessTextureChannel: 0
@@ -103,10 +107,10 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
-    - _Width: 0.0086
+    - _Width: 0.002
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0.06607032, g: 1, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _LightDirOffset: {r: 0, g: 0, b: 0, a: 0}
     - _RimColor: {r: 0, g: 0.3121109, b: 1, a: 1}

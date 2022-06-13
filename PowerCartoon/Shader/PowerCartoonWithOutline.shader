@@ -49,6 +49,7 @@ Shader "Character/PowerCartoon With Outline"
         Pass
         {
             // Tags{"LightMode"="ForwardBase"}
+            // Tags{"LightMode"="UniversalForward"}
             HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag
