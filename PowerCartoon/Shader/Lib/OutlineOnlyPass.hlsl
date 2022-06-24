@@ -34,9 +34,10 @@ v2f vert (appdata v)
     v2f o;
     o.vertex = TransformObjectToHClip(v.vertex.xyz);
     o.vertex.z *= _ShowPolyEdge ? 0.9 : 1;
-    half3 worldNormal = TransformObjectToWorldNormal(v.normal);
-    half3 normalClip = mul((half3x3)UNITY_MATRIX_VP,worldNormal);
-    
+
+    half3 normalView = mul((half3x3)UNITY_MATRIX_IT_MV,v.normal);
+    half3 normalClip = normalize(TransformViewToProjection(normalView));
+
     o.vertex.xy += normalClip.xy * _Width * o.vertex.w * MUL_VERTEX_COLOR_ATTEN(v)*0.1;
 
     o.color = v.color;

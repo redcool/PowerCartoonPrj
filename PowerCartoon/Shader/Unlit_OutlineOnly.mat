@@ -29,10 +29,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _DstMode: 10
-    - _ShowPolyEdge: 0
+    - _ShowPolyEdge: 1
     - _SrcMode: 5
     - _VertexColorAttenOn: 0
-    - _Width: 0.0134
+    - _Width: 0.0717
     m_Colors:
     - _Color: {r: 1, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []

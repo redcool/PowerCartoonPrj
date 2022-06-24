@@ -77,7 +77,7 @@ Material:
     - _CustomShadowNormalBias: 0
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
-    - _DiffuseMin: 0.418
+    - _DiffuseMin: 0.755
     - _DiffuseStepCount: 1
     - _DiffuseStepMax: 0.286
     - _DiffuseStepMin: 0.198
@@ -85,11 +85,11 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0
     - _GlossyReflections: 1
-    - _MainLightShadowSoftScale: 0.72
-    - _Metallic: 0.967
+    - _MainLightShadowSoftScale: 0.51
+    - _Metallic: 1
     - _Mode: 0
-    - _NormalScale: 0.1
-    - _Occlusion: 0.266
+    - _NormalScale: 1
+    - _Occlusion: 0.52
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _PreScatterMaskUseMainTexA: 0

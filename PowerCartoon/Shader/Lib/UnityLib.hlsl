@@ -191,15 +191,9 @@ float3 TransformObjectToWorldNormal(float3 normal){
 float3 TransformViewToProjection(float3 viewPos){
     return mul((float3x3)UNITY_MATRIX_P,viewPos);
 }
-float3 GetWorldSpaceViewDir(float3 worldPos){
-    return _WorldSpaceCameraPos - worldPos;
-}
 
-float3 GetWorldSpaceLightDir(float3 worldPos){
-    return _MainLightPosition.xyz;// - worldPos;
-}
-
-
+#define GetWorldSpaceViewDir(worldPos) (_WorldSpaceCameraPos - worldPos)
+#define GetWorldSpaceLightDir(worldPos) _MainLightPosition.xyz
 
 //==============================
 //  sh
