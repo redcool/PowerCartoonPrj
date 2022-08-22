@@ -2,9 +2,9 @@
 #define FORWARD_PASS_HLSL
 
 #include "PBRInput.hlsl"
-#include "BSDF.hlsl"
-
-#include "URP_MainLightShadows.hlsl"
+#include "../../../PowerShaderLib/Lib/BSDF.hlsl"
+#include "../../../PowerShaderLib/URPLib/URP_GI.hlsl"
+#include "../../../PowerShaderLib/URPLib/URP_MainLightShadows.hlsl"
 
 struct appdata
 {
@@ -40,8 +40,9 @@ v2f vert (appdata v)
     o.tSpace0 = half4(t.x,b.x,n.x,worldPos.x);
     o.tSpace1 = half4(t.y,b.y,n.y,worldPos.y);
     o.tSpace2 = half4(t.z,b.z,n.z,worldPos.z);
-
+    #if ! defined(PRECISION_SHADOW)
     o.shadowCoord = TransformWorldToShadowCoord(worldPos);
+    #endif
     return o;
 }
 
@@ -49,33 +50,36 @@ v2f vert (appdata v)
 
 half4 frag (v2f i) : SV_Target
 {
-    half3 vertexTangent = (half3(i.tSpace0.x,i.tSpace1.x,i.tSpace2.x));
-    half3 vertexBinormal = normalize(half3(i.tSpace0.y,i.tSpace1.y,i.tSpace2.y));
-    half3 vertexNormal = normalize(half3(i.tSpace0.z,i.tSpace1.z,i.tSpace2.z));
-    half3 tn = UnpackNormalScale(tex2D(_NormalMap,i.uv),_NormalScale);
+    float3 vertexTangent = (float3(i.tSpace0.x,i.tSpace1.x,i.tSpace2.x));
+    float3 vertexBinormal = normalize(float3(i.tSpace0.y,i.tSpace1.y,i.tSpace2.y));
+    float3 vertexNormal = normalize(float3(i.tSpace0.z,i.tSpace1.z,i.tSpace2.z));
+    float3 tn = UnpackNormalScale(tex2D(_NormalMap,i.uv),_NormalScale);
 
-    half3 n = normalize(half3(
+    float3 n = normalize(float3(
         dot(i.tSpace0.xyz,tn),
         dot(i.tSpace1.xyz,tn),
         dot(i.tSpace2.xyz,tn)
     ));
 
-    half3 worldPos = half3(i.tSpace0.w,i.tSpace1.w,i.tSpace2.w);
+    float3 worldPos = float3(i.tSpace0.w,i.tSpace1.w,i.tSpace2.w);
 
-    // i.shadowCoord = TransformWorldToShadowCoord(worldPos);
-    half shadowAtten = CalcShadow(i.shadowCoord,worldPos,0);
+    #if defined(PRECISION_SHADOW)
+    i.shadowCoord = TransformWorldToShadowCoord(worldPos);
+    #endif
 
-    half3 l = GetWorldSpaceLightDir(worldPos) + _LightDirOffset;
-    half3 v = normalize(GetWorldSpaceViewDir(worldPos) + _ViewDirOffset);
-    half3 h = normalize(l+v);
-    half nl = saturate(dot(n,l));
-    half originalNL = nl;
+    float shadowAtten = CalcShadow(i.shadowCoord,worldPos,0,_ReceiveShadow,_MainLightShadowSoftScale);
+
+    float3 l = GetWorldSpaceLightDir(worldPos) + _LightDirOffset;
+    float3 v = normalize(GetWorldSpaceViewDir(worldPos) + _ViewDirOffset);
+    float3 h = normalize(l+v);
+    float nl = saturate(dot(n,l));
+    float originalNL = nl;
 
     // diffuse smooth
     // nl = smoothstep(_DiffuseStepMin,_DiffuseStepMax,nl);
     // diffuse step smooth
-    half idNL = floor(nl * _DiffuseStepCount);
-    half idF = frac(nl * _DiffuseStepCount);
+    float idNL = floor(nl * _DiffuseStepCount);
+    float idF = frac(nl * _DiffuseStepCount);
     nl = lerp(idNL,idNL+1,smoothstep(_DiffuseStepMin,_DiffuseStepMax,idF))/ _DiffuseStepCount;
     // return nl;
 
@@ -83,21 +87,21 @@ half4 frag (v2f i) : SV_Target
     nl = max(_DiffuseMin,nl);
 
     // pbr
-    half nv = saturate(dot(n,v));
-    half nh = saturate(dot(n,h));
-    half lh = saturate(dot(l,h));
+    float nv = saturate(dot(n,v));
+    float nh = saturate(dot(n,h));
+    float lh = saturate(dot(l,h));
 
     // pbrmask
     half4 pbrMask = tex2D(_PBRMask,i.uv);
 
-    half smoothness = _Smoothness * pbrMask.y;
-    half roughness = 1 - smoothness;
+    float smoothness = _Smoothness * pbrMask.y;
+    float roughness = 1 - smoothness;
 
-    half a = max(roughness * roughness, HALF_MIN_SQRT);
-    half a2 = max(a * a ,HALF_MIN);
+    float a = max(roughness * roughness, HALF_MIN_SQRT);
+    float a2 = max(a * a ,HALF_MIN);
 
-    half metallic = _Metallic * pbrMask.x;
-    half occlusion = lerp(1,pbrMask.b,_Occlusion);
+    float metallic = _Metallic * pbrMask.x;
+    float occlusion = lerp(1,pbrMask.b,_Occlusion);
 
     half4 mainTex = tex2D(_MainTex, i.uv);
     half3 albedo = mainTex.xyz;
@@ -111,7 +115,7 @@ half4 frag (v2f i) : SV_Target
 
     half mip = roughness * (1.7 - roughness * 0.7) * 6;
     half3 reflectDir = reflect(-v,n);
-    half4 envColor = texCUBElod(unity_SpecCube0,half4(reflectDir,mip));
+    half4 envColor = SAMPLE_TEXTURECUBE_LOD(unity_SpecCube0,samplerunity_SpecCube0,reflectDir,mip);
     envColor.xyz = DecodeHDREnvironment(envColor,unity_SpecCube0_HDR);
 
     half surfaceReduction = 1/(a2+1);

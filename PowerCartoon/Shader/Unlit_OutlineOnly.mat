@@ -34,7 +34,7 @@ Material:
     - _ShowPolyEdge: 1
     - _SrcMode: 5
     - _VertexColorAttenOn: 0
-    - _Width: 0.025
+    - _Width: 0.0244
     m_Colors:
     - _Color: {r: 1, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []

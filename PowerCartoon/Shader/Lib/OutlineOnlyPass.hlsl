@@ -1,6 +1,6 @@
 #if !defined(OUTLINE_ONLY_PASS_HLSL)
 #define OUTLINE_ONLY_PASS_HLSL
-#include "UnityLib.hlsl"
+#include "../../../PowerShaderLib/Lib/UnityLib.hlsl"
 
 struct appdata
 {

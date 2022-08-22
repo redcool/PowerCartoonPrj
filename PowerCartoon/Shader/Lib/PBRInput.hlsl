@@ -1,10 +1,10 @@
 #if !defined(PBR_INPUT_HLSL)
 #define PBR_INPUT_HLSL
-#include "UnityLib.hlsl"
+#include "../../../PowerShaderLib/Lib/UnityLib.hlsl"
 
 sampler2D _MainTex;
 sampler2D _PBRMask;
-samplerCUBE unity_SpecCube0;
+// samplerCUBE unity_SpecCube0;
 sampler2D _NormalMap;
 sampler2D _ScatterLUT;
 

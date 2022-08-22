@@ -1,9 +1,9 @@
 #if !defined(SHADOW_CASTER_PASS_HLSL)
 #define SHADOW_CASTER_PASS_HLSL
 
-#include "UnityLib.hlsl"
+#include "../../../PowerShaderLib/Lib/UnityLib.hlsl"
 #include "PBRInput.hlsl"
-#include "URP_MainLightShadows.hlsl"
+#include "../../../PowerShaderLib/URPLib/URP_MainLightShadows.hlsl"
 
 
 struct v2f{
@@ -33,7 +33,7 @@ half4 GetShadowPositionHClip(appdata input){
     float3 lightDirectionWS = _LightDirection;
 #endif
 
-    half4 positionCS = TransformWorldToHClip(ApplyShadowBias(worldPos,worldNormal,lightDirectionWS));
+    half4 positionCS = TransformWorldToHClip(ApplyShadowBias(worldPos,worldNormal,lightDirectionWS,0,0));
     #if UNITY_REVERSED_Z
         positionCS.z = min(positionCS.z, positionCS.w * UNITY_NEAR_CLIP_VALUE);
     #else

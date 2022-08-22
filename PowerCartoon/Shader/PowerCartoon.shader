@@ -28,7 +28,7 @@ Shader "Character/PowerCartoon"
 
         [Group(Rim)]
         [GroupToggle(Rim,_RIMON)]_RimOn("_RimOn",int) = 0
-        [GroupItem(Rim)]_RimColor("_RimColor",color) = (1,1,1,1)
+        [GroupItem(Rim)][hdr]_RimColor("_RimColor",color) = (1,1,1,1)
         [GroupItem(Rim)]_RimStepMin("_RimStepMin",range(0,1)) = 0
         [GroupItem(Rim)]_RimStepMax("_RimStepMax",range(0,1)) = 1
 
@@ -38,6 +38,7 @@ Shader "Character/PowerCartoon"
 
         [Group(Shadow)]
         [GroupToggle(Shadow)]_ReceiveShadow("_ReceiveShadow",int) = 1
+        [GroupToggle(Shadow,PRECISION_SHADOW)]_PrecisionShadow("_PrecisionShadow",int) = 1
         [GroupItem(Shadow)]_MainLightShadowSoftScale("_MainLightShadowSoftScale",Range(0,2))=0.1
         [GroupItem(Shadow)]_CustomShadowDepthBias("_CustomShadowDepthBias",range(-1,1)) = 0
         [GroupItem(Shadow)]_CustomShadowNormalBias("_CustomShadowNormalBias",range(-1,1)) = 0
@@ -57,6 +58,7 @@ Shader "Character/PowerCartoon"
 
             #pragma shader_feature_local_fragment _PRESSS
             #pragma shader_feature_local_fragment _RIMON
+            #pragma shader_feature_local_fragment PRECISION_SHADOW
 
             #include "Lib/ForwardPass.hlsl"
             
