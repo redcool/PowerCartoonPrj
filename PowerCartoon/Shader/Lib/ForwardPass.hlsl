@@ -151,7 +151,7 @@ half4 frag (v2f i) : SV_Target
     col.xyz += rimColor;
     #endif
     // 水墨
-// col *=  smoothstep(_SpecStepMin,_SpecStepMax,nh);
+col.xyz *= _InkPaintOn ? lerp(_InkPaintColor.xyz,1,smoothstep(_InkPaintMin,_InkPaintMax,nh*nh)) : 1;
     return col;
 }
 

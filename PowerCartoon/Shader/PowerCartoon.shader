@@ -31,11 +31,11 @@ Shader "Character/PowerCartoon"
         [GroupItem(PreSSS)]_ScatterIntensity("_ScatterIntensity",float) = 1
         [GroupToggle(PreSSS)]_PreScatterMaskUseMainTexA("_PreScatterMaskUseMainTexA",float) = 0
 
-        [Group(Rim)]
-        [GroupToggle(Rim,_RIMON)]_RimOn("_RimOn",int) = 0
-        [GroupItem(Rim)][hdr]_RimColor("_RimColor",color) = (1,1,1,1)
-        [GroupItem(Rim)]_RimStepMin("_RimStepMin",range(0,1)) = 0
-        [GroupItem(Rim)]_RimStepMax("_RimStepMax",range(0,1)) = 1
+        [Group(RimAdd)]
+        [GroupToggle(RimAdd,_RIMON)]_RimOn("_RimOn",int) = 0
+        [GroupItem(RimAdd)][hdr]_RimColor("_RimColor",color) = (1,1,1,1)
+        [GroupItem(RimAdd)]_RimStepMin("_RimStepMin",range(0,1)) = 0
+        [GroupItem(RimAdd)]_RimStepMax("_RimStepMax",range(0,1)) = 1
 
         [Group(Custom Light View)]
         [GroupItem(Custom Light View)]_LightDirOffset("_LightDirOffset",vector)=(0,0,0,0)
@@ -47,6 +47,12 @@ Shader "Character/PowerCartoon"
         [GroupItem(Shadow)]_MainLightShadowSoftScale("_MainLightShadowSoftScale",Range(0,2))=0.1
         [GroupItem(Shadow)]_CustomShadowDepthBias("_CustomShadowDepthBias",range(-1,1)) = 0
         [GroupItem(Shadow)]_CustomShadowNormalBias("_CustomShadowNormalBias",range(-1,1)) = 0
+
+        [Group(_InkPaint)]
+        [GroupToggle(_InkPaint)]_InkPaintOn("_InkPaintOn",int)=0
+        [GroupItem(_InkPaint)]_InkPaintColor("_InkPaintColor",color)=(0,0,0,0)
+        [GroupItem(_InkPaint)]_InkPaintMin("_InkPaintMin",range(0,1))=0
+        [GroupItem(_InkPaint)]_InkPaintMax("_InkPaintMax",range(0,1))=1
     }
     SubShader
     {
