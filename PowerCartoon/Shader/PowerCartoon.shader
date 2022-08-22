@@ -19,6 +19,11 @@ Shader "Character/PowerCartoon"
         [GroupItem(Diffuse Step)]_DiffuseStepMax("_DiffuseStepMax",range(0,1)) = 1
         [GroupItem(Diffuse Step)]_DiffuseStepCount("_DiffuseStepCount",range(1,5)) = 1
 
+        [Group(Spec)]
+        [GroupItem(Spec Step)]_SpecStepMin("_SpecStepMin",range(0,1)) = 0
+        [GroupItem(Spec Step)]_SpecStepMax("_SpecStepMax",range(0,1)) = 1
+        // [GroupItem(Spec Step)]_GISpecIntensity("_GISpecIntensity",range(0,1)) = 1
+
         [Group(PreSSS)]
         [GroupToggle(PreSSS,_PRESSS)]_ScatterOn("_Scatter",float) = 0
         [GroupItem(PreSSS)]_ScatterLUT("_ScatterLUT",2d) = "white"{}

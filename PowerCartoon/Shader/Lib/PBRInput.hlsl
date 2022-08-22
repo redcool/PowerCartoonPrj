@@ -15,7 +15,8 @@ half _Smoothness, _Metallic,_Occlusion;
 half _NormalScale;
 
 half _DiffuseMin,_DiffuseStepMin,_DiffuseStepMax,_DiffuseStepCount;
-
+half _SpecStepMax,_SpecStepMin;
+// half _GISpecIntensity;
 half _ScatterCurve,_ScatterIntensity,_PreScatterMaskUseMainTexA;
 
 half4 _RimColor;

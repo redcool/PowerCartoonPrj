@@ -16,30 +16,30 @@ struct appdata
 
 struct v2f
 {
-    half2 uv : TEXCOORD0;
-    half4 vertex : SV_POSITION;
+    float2 uv : TEXCOORD0;
+    float4 vertex : SV_POSITION;
     float4 tSpace0:TEXCOORD1;
     float4 tSpace1:TEXCOORD2;
     float4 tSpace2:TEXCOORD3;
 
-    half4 shadowCoord:TEXCOORD4;
+    float4 shadowCoord:TEXCOORD4;
 
 };
 
 v2f vert (appdata v)
 {
     v2f o;
-    half3 worldPos = TransformObjectToWorld(v.vertex.xyz);
+    float3 worldPos = TransformObjectToWorld(v.vertex.xyz);
     o.vertex = TransformWorldToHClip(worldPos);
     o.uv = v.uv;
 
-    half3 n = normalize(TransformObjectToWorldNormal(v.normal));
-    half3 t = normalize(TransformObjectToWorldDir(v.tangent.xyz));
-    half3 b = normalize(cross(n,t)) * v.tangent.w;
+    float3 n = normalize(TransformObjectToWorldNormal(v.normal));
+    float3 t = normalize(TransformObjectToWorldDir(v.tangent.xyz));
+    float3 b = normalize(cross(n,t)) * v.tangent.w;
 
-    o.tSpace0 = half4(t.x,b.x,n.x,worldPos.x);
-    o.tSpace1 = half4(t.y,b.y,n.y,worldPos.y);
-    o.tSpace2 = half4(t.z,b.z,n.z,worldPos.z);
+    o.tSpace0 = float4(t.x,b.x,n.x,worldPos.x);
+    o.tSpace1 = float4(t.y,b.y,n.y,worldPos.y);
+    o.tSpace2 = float4(t.z,b.z,n.z,worldPos.z);
     #if ! defined(PRECISION_SHADOW)
     o.shadowCoord = TransformWorldToShadowCoord(worldPos);
     #endif
@@ -60,6 +60,7 @@ half4 frag (v2f i) : SV_Target
         dot(i.tSpace1.xyz,tn),
         dot(i.tSpace2.xyz,tn)
     ));
+    // n = vertexNormal;
 
     float3 worldPos = float3(i.tSpace0.w,i.tSpace1.w,i.tSpace2.w);
 
@@ -89,6 +90,8 @@ half4 frag (v2f i) : SV_Target
     // pbr
     float nv = saturate(dot(n,v));
     float nh = saturate(dot(n,h));
+    // nh = smoothstep(_SpecStepMin,_SpecStepMax,nh);
+    // return nh;    
     float lh = saturate(dot(l,h));
 
     // pbrmask
@@ -123,11 +126,15 @@ half4 frag (v2f i) : SV_Target
     half grazingTerm = saturate(smoothness + metallic);
     half fresnelTerm = Pow4(1-nv);
     half3 giSpec = surfaceReduction * envColor.xyz * lerp(specColor,grazingTerm,fresnelTerm);
+    // giSpec *= _GISpecIntensity;
+
     half4 col = 0;
     col.xyz = (giDiff + giSpec) * occlusion;
 
     half3 radiance = nl * _MainLightColor.xyz * shadowAtten;
-    half specTerm = MinimalistCookTorrance(nh,lh,a,a2);
+    float specTerm = MinimalistCookTorrance(nh,lh,a,a2);
+    specTerm = smoothstep(_SpecStepMin,_SpecStepMax,specTerm*0.01)*100;
+
     col.xyz += (diffColor + specColor * specTerm) * radiance;
 
     // pre sss
@@ -143,7 +150,8 @@ half4 frag (v2f i) : SV_Target
     half3 rimColor =  rim * originalNL * _RimColor;
     col.xyz += rimColor;
     #endif
-
+    // 水墨
+// col *=  smoothstep(_SpecStepMin,_SpecStepMax,nh);
     return col;
 }
 
