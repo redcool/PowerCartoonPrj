@@ -4,6 +4,7 @@ Shader "Character/PowerCartoon"
     {
         [Group(Main )]
         [GroupItem(Main)]_MainTex ("Texture", 2D) = "white" {}
+        [GroupItem(Main)]_BaseColor ("_BaseColor", color) = (1,1,1,1)
         [GroupItem(Main)]_NormalMap("_NormalMap",2d) = "bump"{}
         [GroupItem(Main)]_NormalScale("_NormalScale",float) = 1
 
@@ -48,11 +49,18 @@ Shader "Character/PowerCartoon"
         [GroupItem(Shadow)]_CustomShadowDepthBias("_CustomShadowDepthBias",range(-1,1)) = 0
         [GroupItem(Shadow)]_CustomShadowNormalBias("_CustomShadowNormalBias",range(-1,1)) = 0
 
-        [Group(_InkPaint)]
-        [GroupToggle(_InkPaint)]_InkPaintOn("_InkPaintOn",int)=0
-        [GroupItem(_InkPaint)]_InkPaintColor("_InkPaintColor",color)=(0,0,0,0)
-        [GroupItem(_InkPaint)]_InkPaintMin("_InkPaintMin",range(0,1))=0
-        [GroupItem(_InkPaint)]_InkPaintMax("_InkPaintMax",range(0,1))=1
+        [Group(InkPaint)]
+        [GroupToggle(InkPaint)]_InkPaintOn("_InkPaintOn",int)=0
+        [GroupItem(InkPaint)]_InkPaintColor("_InkPaintColor",color)=(0,0,0,0)
+        [GroupItem(InkPaint)]_InkPaintMin("_InkPaintMin",range(0,1))=0
+        [GroupItem(InkPaint)]_InkPaintMax("_InkPaintMax",range(0,1))=1
+
+        [Group(Emission)]
+        [GroupToggle(Emission,_EMISSION)]_EmissionOn("_EmissionOn",int)=0
+        [GroupItem(Emission)]_EmissionMap("_EmissionMap",2d)="white"{}
+        [GroupEnum(Emission,None 0 MainTex.a 1 EmissionMap.a 2)]_EmissionMaskFrom("_EmissionMaskFrom",int)=0
+        [GroupItem(Emission)][hdr]_EmissionColor("_EmissionColor",color)=(1,1,1,1)
+        [GroupEnum(Emission, Blend 0 Add 1)][hdr]_EmissionMode("_EmissionMode",int) = 0
     }
     SubShader
     {
@@ -67,9 +75,10 @@ Shader "Character/PowerCartoon"
             #pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
             #pragma multi_compile_fragment _ _ADDITIONAL_LIGHTS_ON
 
-            #pragma shader_feature_local_fragment _PRESSS
-            #pragma shader_feature_local_fragment _RIMON
+            #pragma shader_feature_fragment _PRESSS
+            #pragma shader_feature_fragment _RIMON
             #pragma shader_feature_local_fragment PRECISION_SHADOW
+            #pragma shader_feature_fragment _EMISSION
 
             #include "Lib/ForwardPass.hlsl"
             

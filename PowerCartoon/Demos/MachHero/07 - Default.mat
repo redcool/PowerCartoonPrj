@@ -11,6 +11,8 @@ Material:
   m_Shader: {fileID: 4800000, guid: e1bc73a9f8715f349b2028fe0be7d16b, type: 3}
   m_ValidKeywords:
   - PRECISION_SHADOW
+  - _EMISSION
+  - _PRESSS
   m_InvalidKeywords:
   - _RECEIVESHADOW_ON
   m_LightmapFlags: 4
@@ -39,11 +41,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: e4bb60caae7194a45860f6f51b3f1e5a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: e4bb60caae7194a45860f6f51b3f1e5a, type: 3}
+        m_Texture: {fileID: 2800000, guid: 5d8924162565f9e46a0d60043b28c7f3, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -81,36 +83,45 @@ Material:
     - _CustomShadowNormalBias: 0
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
-    - _DiffuseMin: 0.393
+    - _DiffuseMin: 0.655
     - _DiffuseStepCount: 1
-    - _DiffuseStepMax: 0.419
-    - _DiffuseStepMin: 0.154
+    - _DiffuseStepMax: 0.601
+    - _DiffuseStepMin: 0.417
     - _DstBlend: 0
+    - _EmissionMask: 1
+    - _EmissionMaskFrom: 2
+    - _EmissionMode: 0
+    - _EmissionOn: 1
     - _GISpecIntensity: 1
     - _GlossMapScale: 1
     - _Glossiness: 0
     - _GlossyReflections: 1
+    - _InkPaintMax: 0.514
+    - _InkPaintMin: 0.252
+    - _InkPaintOn: 0
     - _MainLightShadowSoftScale: 0.37
     - _Metallic: 0
     - _Mode: 0
     - _NormalScale: 1
-    - _Occlusion: 1
+    - _Occlusion: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _PreScatterMaskUseMainTexA: 0
     - _PrecisionShadow: 1
     - _ReceiveShadow: 1
     - _RimIntensity: 18.96
+    - _RimMultiMax: 1
+    - _RimMultiMin: 0.282
     - _RimOn: 0
     - _RimStepMax: 1
-    - _RimStepMin: 0.744
+    - _RimStepMin: 0
     - _ScatterCurve: 1
     - _ScatterIntensity: 1
-    - _ScatterOn: 0
+    - _ScatterOn: 1
     - _Smoothness: 1
     - _SmoothnessTextureChannel: 0
-    - _SpecStepMax: 1
-    - _SpecStepMin: 0
+    - _SpecStepMax: 0.675
+    - _SpecStepMin: 0.154
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
@@ -118,8 +129,9 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 0.06607032, g: 1, b: 0, a: 1}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _EmissionColor: {r: 2, g: 0, b: 0, a: 1}
+    - _InkPaintColor: {r: 0, g: 0, b: 0, a: 0}
     - _LightDirOffset: {r: 0, g: 0, b: 0, a: 0}
-    - _RimColor: {r: 0, g: 1.0039216, b: 8, a: 1}
+    - _RimColor: {r: 1.4980392, g: 1.4980392, b: 1.4980392, a: 1}
     - _ViewDirOffset: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

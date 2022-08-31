@@ -106,11 +106,11 @@ half4 frag (v2f i) : SV_Target
     float metallic = _Metallic * pbrMask.x;
     float occlusion = lerp(1,pbrMask.b,_Occlusion);
 
-    half4 mainTex = tex2D(_MainTex, i.uv);
+    half4 mainTex = tex2D(_MainTex, i.uv) * _BaseColor;
     half3 albedo = mainTex.xyz;
     half alpha = mainTex.w;
 
-    half3 diffColor = albedo * (1-metallic);
+    half3 diffColor = albedo * (1 - metallic);
     half3 specColor = lerp(0.04,albedo,metallic);
 
     half3 sh = SampleSH(n);
@@ -139,19 +139,33 @@ half4 frag (v2f i) : SV_Target
 
     // pre sss
     #if defined(_PRESSS)
-    half3 presss = PreScattering(_ScatterLUT,n,l,_MainLightColor.xyz,nl,half4(albedo,alpha),worldPos,_ScatterCurve,_ScatterIntensity,_PreScatterMaskUseMainTexA);
-    col.xyz += presss;
+        half3 presss = PreScattering(_ScatterLUT,n,l,_MainLightColor.xyz,nl,half4(albedo,alpha),worldPos,_ScatterCurve,_ScatterIntensity,_PreScatterMaskUseMainTexA);
+        col.xyz += presss;
     #endif
 
     #if defined(_RIMON)
-    half rim = 1 - nv;
-    rim = rim * rim;
-    rim = smoothstep(_RimStepMin,_RimStepMax,rim);
-    half3 rimColor =  rim * originalNL * _RimColor;
-    col.xyz += rimColor;
+        half rim = 1 - nv;
+        rim = rim * rim;
+        rim = smoothstep(_RimStepMin,_RimStepMax,rim);
+        half3 rimColor =  rim * originalNL * _RimColor;
+        col.xyz += rimColor;
     #endif
+
     // 水墨
-col.xyz *= _InkPaintOn ? lerp(_InkPaintColor.xyz,1,smoothstep(_InkPaintMin,_InkPaintMax,nh*nh)) : 1;
+    col.xyz *= _InkPaintOn ? lerp(_InkPaintColor.xyz,1,smoothstep(_InkPaintMin,_InkPaintMax,nh*nh)) : 1;
+
+    #if defined(_EMISSION)
+        half4 emissionColor = tex2D(_EmissionMap,i.uv);
+        emissionColor.xyz *= _EmissionColor;
+
+        half4 emissionMaskData = half4(1,mainTex.w,emissionColor.w,0);
+        half emissionMask = GetMask(emissionMaskData,_EmissionMaskFrom);
+
+        half3 blendEmission = lerp(col.xyz,emissionColor,emissionMask);
+        half3 addEmission = col.xyz + emissionColor.xyz * emissionMask;
+        col.xyz = lerp(blendEmission,addEmission,_EmissionMode);
+    #endif
+
     return col;
 }
 
