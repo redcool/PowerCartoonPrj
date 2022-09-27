@@ -7,25 +7,27 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: 07 - Default
-  m_Shader: {fileID: 4800000, guid: e1bc73a9f8715f349b2028fe0be7d16b, type: 3}
+  m_Name: lit
+  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
   m_ValidKeywords:
-  - PRECISION_SHADOW
-  - _EMISSION
-  - _PRESSS
-  m_InvalidKeywords:
-  - _RECEIVESHADOW_ON
+  - _NORMALMAP
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
-  stringTagMap: {}
+  stringTagMap:
+    RenderType: Opaque
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _BaseMap:
+        m_Texture: {fileID: 2800000, guid: 84f55495f54e11a48ae5834d814ec867, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BumpMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 3cf0bef342f8fd04fa661200e9c566af, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -41,7 +43,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
-        m_Texture: {fileID: 2800000, guid: e4bb60caae7194a45860f6f51b3f1e5a, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -53,7 +55,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
-        m_Texture: {fileID: 2800000, guid: 3cf0bef342f8fd04fa661200e9c566af, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -65,7 +67,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _PBRMask:
-        m_Texture: {fileID: 2800000, guid: 1586146076b41bd48a2df77ac2e2a38d, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
@@ -76,63 +78,104 @@ Material:
         m_Texture: {fileID: 2800000, guid: 8483ece466ce80c41a09522d4b85e265, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SpecGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _AlphaClip: 0
+    - _Blend: 0
     - _BumpScale: 1
+    - _ClearCoatMask: 0
+    - _ClearCoatSmoothness: 0
+    - _Cull: 2
     - _CustomShadowDepthBias: 0
     - _CustomShadowNormalBias: 0
     - _Cutoff: 0.5
+    - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _DiffuseMin: 0.655
+    - _DiffuseMin: 0
     - _DiffuseStepCount: 1
-    - _DiffuseStepMax: 0.601
-    - _DiffuseStepMin: 0.417
+    - _DiffuseStepMax: 1
+    - _DiffuseStepMin: 0
     - _DstBlend: 0
     - _EmissionMask: 1
-    - _EmissionMaskFrom: 2
+    - _EmissionMaskFrom: 1
     - _EmissionMode: 0
-    - _EmissionOn: 1
-    - _GISpecIntensity: 1
+    - _EmissionOn: 0
+    - _EnvironmentReflections: 1
+    - _GISpecIntensity: 0.726
     - _GlossMapScale: 1
     - _Glossiness: 0
     - _GlossyReflections: 1
-    - _InkPaintMax: 0.514
-    - _InkPaintMin: 0.252
+    - _InkPaintMax: 1
+    - _InkPaintMin: 0
     - _InkPaintOn: 0
-    - _MainLightShadowSoftScale: 0.37
+    - _MainLightShadowSoftScale: 0.52
     - _Metallic: 0
     - _Mode: 0
-    - _NormalScale: 1
+    - _NormalScale: 0.34
     - _Occlusion: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _PreScatterMaskUseMainTexA: 0
     - _PrecisionShadow: 1
+    - _QueueOffset: 0
     - _ReceiveShadow: 1
+    - _ReceiveShadows: 1
     - _RimIntensity: 18.96
     - _RimMultiMax: 1
-    - _RimMultiMin: 0.282
+    - _RimMultiMin: 0
     - _RimOn: 0
     - _RimStepMax: 1
-    - _RimStepMin: 0
+    - _RimStepMin: 0.744
     - _ScatterCurve: 1
     - _ScatterIntensity: 1
-    - _ScatterOn: 1
-    - _Smoothness: 1
+    - _ScatterOn: 0
+    - _Smoothness: 0
     - _SmoothnessTextureChannel: 0
-    - _SpecStepMax: 0.675
-    - _SpecStepMin: 0.154
+    - _SpecStepMax: 0.282
+    - _SpecStepMin: 0.188
     - _SpecularHighlights: 1
     - _SrcBlend: 1
+    - _Surface: 0
     - _UVSec: 0
     - _Width: 0.002
+    - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 0.06607032, g: 1, b: 0, a: 1}
-    - _EmissionColor: {r: 2, g: 0, b: 0, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _InkPaintColor: {r: 0, g: 0, b: 0, a: 0}
     - _LightDirOffset: {r: 0, g: 0, b: 0, a: 0}
-    - _RimColor: {r: 1.4980392, g: 1.4980392, b: 1.4980392, a: 1}
+    - _RimColor: {r: 0, g: 1.0039216, b: 8, a: 1}
+    - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _ViewDirOffset: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
+--- !u!114 &3264194300672707358
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 5

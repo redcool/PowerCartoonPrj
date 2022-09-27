@@ -2,6 +2,7 @@ Shader "Character/PowerCartoon"
 {
     Properties
     {
+        [GroupHeader(v2.0.2)]
         [Group(Main )]
         [GroupItem(Main)]_MainTex ("Texture", 2D) = "white" {}
         [GroupItem(Main)]_BaseColor ("_BaseColor", color) = (1,1,1,1)
@@ -20,7 +21,7 @@ Shader "Character/PowerCartoon"
         [GroupItem(Diffuse Step)]_DiffuseStepMax("_DiffuseStepMax",range(0,1)) = 1
         [GroupItem(Diffuse Step)]_DiffuseStepCount("_DiffuseStepCount",range(1,5)) = 1
 
-        [Group(Spec)]
+        [Group(Spec Step)]
         [GroupItem(Spec Step)]_SpecStepMin("_SpecStepMin",range(0,1)) = 0
         [GroupItem(Spec Step)]_SpecStepMax("_SpecStepMax",range(0,1)) = 1
         // [GroupItem(Spec Step)]_GISpecIntensity("_GISpecIntensity",range(0,1)) = 1
@@ -35,12 +36,17 @@ Shader "Character/PowerCartoon"
         [Group(RimAdd)]
         [GroupToggle(RimAdd,_RIMON)]_RimOn("_RimOn",int) = 0
         [GroupItem(RimAdd)][hdr]_RimColor("_RimColor",color) = (1,1,1,1)
+        [GroupToggle(RimAdd)]_RimReceiveMainLightColor("_RimReceiveMainLightColor",int) = 0
         [GroupItem(RimAdd)]_RimStepMin("_RimStepMin",range(0,1)) = 0
         [GroupItem(RimAdd)]_RimStepMax("_RimStepMax",range(0,1)) = 1
 
-        [Group(Custom Light View)]
-        [GroupItem(Custom Light View)]_LightDirOffset("_LightDirOffset",vector)=(0,0,0,0)
-        [GroupItem(Custom Light View)]_ViewDirOffset("_ViewDirOffset",vector) = (0,0,0,0)
+        [Group(Custom Light)]
+        [GroupItem(Custom Light)]_CustomLightOn("_CustomLightOn",int)= 0
+        [GroupItem(Custom Light)]_LightDirOffset("_LightDirOffset",vector)=(0,0,0,0)
+        [GroupItem(Custom Light)]_CustomLightColor("_CustomLightColor",color)=(1,1,1,1)
+
+        [Group(Custom View)]
+        [GroupItem(Custom View)]_ViewDirOffset("_ViewDirOffset",vector) = (0,0,0,0)
 
         [Group(Shadow)]
         [GroupToggle(Shadow)]_ReceiveShadow("_ReceiveShadow",int) = 1

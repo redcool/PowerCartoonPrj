@@ -75,6 +75,7 @@ half4 frag (v2f i) : SV_Target
     float3 h = normalize(l+v);
     float nl = saturate(dot(n,l));
     float originalNL = nl;
+    half3 mainLightColor = lerp(_MainLightColor,_CustomLightColor,_CustomLightOn);
 
     // diffuse smooth
     // nl = smoothstep(_DiffuseStepMin,_DiffuseStepMax,nl);
@@ -131,7 +132,7 @@ half4 frag (v2f i) : SV_Target
     half4 col = 0;
     col.xyz = (giDiff + giSpec) * occlusion;
 
-    half3 radiance = nl * _MainLightColor.xyz * shadowAtten;
+    half3 radiance = nl * mainLightColor * shadowAtten;
     float specTerm = MinimalistCookTorrance(nh,lh,a,a2);
     specTerm = smoothstep(_SpecStepMin,_SpecStepMax,specTerm*0.01)*100;
 
@@ -147,7 +148,7 @@ half4 frag (v2f i) : SV_Target
         half rim = 1 - nv;
         rim = rim * rim;
         rim = smoothstep(_RimStepMin,_RimStepMax,rim);
-        half3 rimColor =  rim * originalNL * _RimColor;
+        half3 rimColor =  rim * originalNL * _RimColor * lerp(1,mainLightColor,_RimReceiveMainLightColor);
         col.xyz += rimColor;
     #endif
 

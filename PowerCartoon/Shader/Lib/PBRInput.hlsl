@@ -23,11 +23,14 @@ half _SpecStepMax,_SpecStepMin;
 half _ScatterCurve,_ScatterIntensity,_PreScatterMaskUseMainTexA;
 
 half4 _RimColor;
+half _RimReceiveMainLightColor;
 half _RimStepMin,_RimStepMax;
 half _InkPaintOn, _InkPaintMin,_InkPaintMax;
 half4 _InkPaintColor;
 
-half3 _LightDirOffset,_ViewDirOffset;
+half _CustomLightOn;
+half3 _LightDirOffset, _CustomLightColor;
+half3 _ViewDirOffset;
 
 half _ReceiveShadow;
 half _MainLightShadowSoftScale;
