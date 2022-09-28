@@ -8,3 +8,9 @@ Outline Only
 
 Reference Git:
 https://github.com/redcool/PowerUtilities.git
+https://github.com/redcool/PowerShaderLib.git
+
+Features:
+v2.0.2
+    rimAdd, add receive main light color
+    add SpecStep
