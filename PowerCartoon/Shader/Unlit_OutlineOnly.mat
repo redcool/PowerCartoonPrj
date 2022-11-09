@@ -24,17 +24,28 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _NoiseMap:
+        m_Texture: {fileID: 2800000, guid: 0267ab071e41ee44da5d66227ff388e8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 10}
     - _OutlineTex:
-        m_Texture: {fileID: 2800000, guid: 1de38ecbe48d87b48a8d10c48ca8ec59, type: 3}
+        m_Texture: {fileID: 2800000, guid: 829952d0f8c92804f99fa9af2e881e33, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _BaseLocalY: -0.24
+    - _BaseY: 0
     - _DstMode: 10
+    - _NoiseIntensity: 3.41
+    - _NoiseScale: 1
+    - _NoiseVertexOn: 0
     - _ShowPolyEdge: 1
     - _SrcMode: 5
     - _VertexColorAttenOn: 0
-    - _Width: 0.0244
+    - _Width: 0.192
+    - _ZOffset: 0.704
     m_Colors:
-    - _Color: {r: 1, g: 0, b: 0, a: 1}
+    - _Color: {r: 0.9245283, g: 0.18413134, b: 0, a: 1}
+    - _NoiseST: {r: 1, g: 10, b: 0, a: -101.49}
   m_BuildTextureStacks: []
