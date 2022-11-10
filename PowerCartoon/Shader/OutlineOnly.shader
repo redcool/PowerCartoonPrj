@@ -22,6 +22,7 @@ Shader "Unlit/OutlineOnly"
         [Toggle(_NOISE_VERTEX_ON)]_NoiseVertexOn("_NoiseVertexOn",int) = 0
         _NoiseWaveScale("_NoiseWaveScale",float) = 0.3
         _BaseLocalY("_BaseLocalY",float) = 0
+        _VertexMoveMode("_VertexMoveMode",range(0,1)) = 0.5
 
         [Header(Render States)]
         [Enum(UnityEngine.Rendering.BlendMode)]_SrcMode("_SrcMode",int) = 5

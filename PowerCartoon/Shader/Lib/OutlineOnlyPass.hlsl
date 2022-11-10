@@ -29,6 +29,7 @@ half _VertexColorAttenOn;
 half _ZOffset;
 
 half _NoiseWaveScale;
+half _VertexMoveMode;
 float _BaseLocalY;
 float _NoiseAlphaScale,_NoiseAlphaBase;
 
@@ -51,8 +52,10 @@ v2f vert (appdata v)
         noise *= _NoiseWaveScale;
         noise *= localYAtten;
         noise *= rnv;
-        // v.vertex.xyz += v.normal * noise;
-        v.vertex.xyz *= noise + 1;
+        // v.vertex.xyz *= noise + 1;
+        float3 normalVertex = v.normal * noise;
+        float3 dirVertex = v.vertex.xyz * noise;
+        v.vertex.xyz += lerp(normalVertex,dirVertex,_VertexMoveMode);
     #endif
 
     v2f o;
