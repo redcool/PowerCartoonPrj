@@ -4,7 +4,7 @@ Shader "Unlit/OutlineOnly"
     {
         [Header(Outline)]
         _OutlineTex("_OutlineTex",2d) = "white"{}
-        _Color("_Color",color)  =(1,1,1,1)
+        [hdr]_Color("_Color",color)  =(1,1,1,1)
         _Width("_Width",range(0.002,0.2)) = 0.01
         _WidthLocalYAtten("_WidthLocalYAtten",float) = -1
         _ZOffset("_ZOffset",range(0,1)) = 0.9
@@ -16,6 +16,7 @@ Shader "Unlit/OutlineOnly"
         [Toggle(_NOISE_MAP_ON)]_NoiseMapOn("_NoiseMapOn",int) = 0
         _NoiseMap("_NoiseMap",2d) = ""{}
         _NoiseAlphaScale("_NoiseAlphaScale",float) = 1
+        _NoiseAlphaBase("_NoiseAlphaBase",range(-1,1)) = 0
 
         [Header(Noise Vertex)]
         [Toggle(_NOISE_VERTEX_ON)]_NoiseVertexOn("_NoiseVertexOn",int) = 0

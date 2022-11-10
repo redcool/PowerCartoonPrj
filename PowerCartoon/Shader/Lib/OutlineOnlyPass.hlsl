@@ -30,7 +30,7 @@ half _ZOffset;
 
 half _NoiseWaveScale;
 float _BaseLocalY;
-float _NoiseAlphaScale;
+float _NoiseAlphaScale,_NoiseAlphaBase;
 
 float4 _NoiseMap_ST;
 CBUFFER_END
@@ -51,7 +51,8 @@ v2f vert (appdata v)
         noise *= _NoiseWaveScale;
         noise *= localYAtten;
         noise *= rnv;
-        v.vertex.xyz += v.normal * noise;
+        // v.vertex.xyz += v.normal * noise;
+        v.vertex.xyz *= noise + 1;
     #endif
 
     v2f o;
@@ -80,13 +81,13 @@ half4 frag (v2f i) : SV_Target
     #if defined(_NOISE_MAP_ON)
     noise = tex2D(_NoiseMap,i.uv * _NoiseMap_ST.xy + _NoiseMap_ST.zw *_Time.xx);
     #endif
-    // clip(noise);
     
     float2 uv = i.uv * _OutlineTex_ST.xy + _OutlineTex_ST.zw + noise;
     half4 col = tex2D(_OutlineTex,uv) * _Color * MUL_VERTEX_COLOR_ATTEN(i);
 
     #if defined(_NOISE_MAP_ON)
-    col.a *= saturate(noise*_NoiseAlphaScale);
+    // clip(noise-_NoiseAlphaScale);
+    col.a *= saturate((noise- _NoiseAlphaBase)*_NoiseAlphaScale);
     #endif
 
     #if defined(_APPLY_FRESNEL)
