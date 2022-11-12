@@ -12,15 +12,19 @@ Shader "Unlit/OutlineOnly"
         [Toggle(_VERTEX_COLOR_ATTEN)]_VertexColorAttenOn("_VertexColorAttenOn",float) = 1
         [Toggle(_APPLY_FRESNEL)]_ApplyFresnel("_ApplyFresnel",int) = 0
 
-        [Header(Noise)]
+        [Header(Noise Map)]    
+        _NoiseMap("_NoiseMap",2d) = "bump"{}
+
+        [Header(Noise UV)]
         [Toggle(_NOISE_MAP_ON)]_NoiseMapOn("_NoiseMapOn",int) = 0
-        _NoiseMap("_NoiseMap",2d) = ""{}
+        [GroupToggle]_NoiseOffsetAutoStop("_NoiseOffsetAutoStop",float) = 0
         _NoiseAlphaScale("_NoiseAlphaScale",float) = 1
         _NoiseAlphaBase("_NoiseAlphaBase",range(-1,1)) = 0
 
         [Header(Noise Vertex)]
         [Toggle(_NOISE_VERTEX_ON)]_NoiseVertexOn("_NoiseVertexOn",int) = 0
         _NoiseWaveScale("_NoiseWaveScale",float) = 0.3
+        [GroupToggle]_NoiseWaveAutoStop("_NoiseWaveAutoStop",float) = 0
         _BaseLocalY("_BaseLocalY",float) = 0
         _VertexMoveMode("_VertexMoveMode",range(0,1)) = 0.5
 

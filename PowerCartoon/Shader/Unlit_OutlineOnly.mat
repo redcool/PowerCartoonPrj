@@ -28,33 +28,36 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _NoiseMap:
         m_Texture: {fileID: 2800000, guid: f5831b3a284c1ee459f81a90c3849a1d, type: 3}
-        m_Scale: {x: 4, y: 4}
-        m_Offset: {x: 0, y: -12.71}
+        m_Scale: {x: 4, y: 4.81}
+        m_Offset: {x: 0, y: -10}
     - _OutlineTex:
         m_Texture: {fileID: 0}
-        m_Scale: {x: 10, y: 10}
+        m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
     - _ApplyFresnel: 0
-    - _BaseLocalY: -0.06
+    - _BaseLocalY: -0.25
     - _BaseY: 0
-    - _CullMode: 2
+    - _CullMode: 0
     - _DstMode: 10
-    - _NoiseAlphaBase: 0.09
+    - _NoiseAlphaBase: 0.16
     - _NoiseAlphaScale: 1
     - _NoiseIntensity: 3.41
     - _NoiseMapOn: 1
+    - _NoiseOffsetAutoStop: 0
     - _NoiseScale: 1
     - _NoiseVertexOn: 1
-    - _NoiseWaveScale: 2.5
+    - _NoiseWaveAutoStop: 0
+    - _NoiseWaveScale: 0.37
     - _ShowPolyEdge: 1
     - _SrcMode: 5
     - _VertexColorAttenOn: 0
+    - _VertexMoveMode: 1
     - _Width: 0.2
-    - _WidthLocalYAtten: -1
-    - _ZOffset: 0.704
+    - _WidthLocalYAtten: -0.55
+    - _ZOffset: 0.888
     m_Colors:
-    - _Color: {r: 2.1185474, g: 0.5767773, b: 0, a: 1}
+    - _Color: {r: 1.39772, g: 0.3805311, b: 0, a: 1}
     - _NoiseST: {r: 1, g: 10, b: 0, a: -101.49}
   m_BuildTextureStacks: []
