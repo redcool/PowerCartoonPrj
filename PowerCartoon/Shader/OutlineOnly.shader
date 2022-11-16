@@ -5,7 +5,8 @@ Shader "Unlit/OutlineOnly"
         [Header(Outline)]
         _OutlineTex("_OutlineTex",2d) = "white"{}
         [hdr]_Color("_Color",color)  =(1,1,1,1)
-        _Width("_Width",range(0.002,0.2)) = 0.01
+        _Width("_Width",range(0.002,.3)) = 0.01
+        [GroupToggle]_KeepWidth("_KeepWidth",int) = 1
         _WidthLocalYAtten("_WidthLocalYAtten",float) = -1
         _ZOffset("_ZOffset",range(0,1)) = 0.9
 

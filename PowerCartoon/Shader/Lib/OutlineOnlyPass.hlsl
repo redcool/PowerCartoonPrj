@@ -22,7 +22,7 @@ sampler2D _OutlineTex;
 sampler2D _NoiseMap;
 
 CBUFFER_START(UnityPerMaterial)
-half _Width,_WidthLocalYAtten;
+half _Width,_WidthLocalYAtten,_KeepWidth;
 half4 _Color;
 half4 _OutlineTex_ST;
 half _VertexColorAttenOn;
@@ -45,8 +45,8 @@ float2 UVOffset(float2 uvOffset,bool autoStop){
 v2f vert (appdata v)
 {
     float3 worldPos = mul(unity_ObjectToWorld,v.vertex);
-    float3 wn = (UnityObjectToWorldNormal(v.normal));
-    float3 viewDir = (UnityWorldSpaceViewDir(worldPos));
+    float3 wn = normalize(UnityObjectToWorldNormal(v.normal));
+    float3 viewDir = normalize(UnityWorldSpaceViewDir(worldPos));
     float rnv = 1 - saturate(dot(wn,viewDir));
 
     float localYAtten = saturate(v.vertex.y - _BaseLocalY);
@@ -65,7 +65,7 @@ v2f vert (appdata v)
     v2f o;
     o.vertex = TransformObjectToHClip(v.vertex.xyz);
     o.vertex.z *= _ZOffset;
-    o.uv.z = rnv;//smoothstep(0.1,0.2,rnv);
+    o.uv.z = smoothstep(0.7,1,rnv);
 
     float3 normalView = mul((float3x3)UNITY_MATRIX_IT_MV,v.normal);
     float3 normalClip = normalize(TransformViewToProjection(normalView));
@@ -73,7 +73,7 @@ v2f vert (appdata v)
     float aspect = _ScreenParams.y/_ScreenParams.x;
     normalClip.x *= aspect;
 
-    float2 outlineOffset = (normalClip.xy) * _Width * o.vertex.w * 0.1;
+    float2 outlineOffset = (normalClip.xy) * _Width * 0.1 * lerp(1,o.vertex.w,_KeepWidth);
     outlineOffset *= MUL_VERTEX_COLOR_ATTEN(v);
     outlineOffset *= smoothstep(0.,0.3,saturate(v.vertex.y - _WidthLocalYAtten));
     o.vertex.xy += outlineOffset;
