@@ -16,6 +16,8 @@ struct v2f
     float4 vertex : SV_POSITION;
     float4 uv:TEXCOORD;
     half4 color:COLOR;
+    float3 normal:TEXCOORD1;
+    float3 worldPos:TEXCOORD2;
 };
 
 sampler2D _OutlineTex;
@@ -27,6 +29,8 @@ half4 _Color;
 half4 _OutlineTex_ST;
 half _VertexColorAttenOn;
 half _ZOffset;
+
+half _FresnelMin,_FresnelMax;
 
 half _NoiseWaveScale,_NoiseWaveAutoStop;
 half _VertexMoveMode;
@@ -65,7 +69,7 @@ v2f vert (appdata v)
     v2f o;
     o.vertex = TransformObjectToHClip(v.vertex.xyz);
     o.vertex.z *= _ZOffset;
-    o.uv.z = smoothstep(0.7,1,rnv);
+    o.uv.z = smoothstep(0.,.5,rnv);
 
     float3 normalView = mul((float3x3)UNITY_MATRIX_IT_MV,v.normal);
     float3 normalClip = normalize(TransformViewToProjection(normalView));
@@ -80,7 +84,9 @@ v2f vert (appdata v)
 
     o.color = v.color;
     o.uv.xy = v.uv;
-    
+    // o.uv.z = length(normalClip.xy);
+    o.normal = wn;
+    o.worldPos = worldPos;
     return o;
 }
 
@@ -101,7 +107,13 @@ half4 frag (v2f i) : SV_Target
     #endif
 
     #if defined(_APPLY_FRESNEL)
-    col.a *= i.uv.z;
+        float3 normal = normalize(i.normal);
+        float3 viewDir = normalize(UnityWorldSpaceViewDir(i.worldPos));
+        float nv = saturate(dot(normal,viewDir));
+        float rnv = 1-nv;
+        float fresnel = smoothstep(_FresnelMin,_FresnelMax,rnv);
+
+    col.a *= fresnel;
     #endif
     
     return col;

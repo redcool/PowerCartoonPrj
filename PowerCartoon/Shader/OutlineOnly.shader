@@ -11,7 +11,11 @@ Shader "Unlit/OutlineOnly"
         _ZOffset("_ZOffset",range(0,1)) = 0.9
 
         [Toggle(_VERTEX_COLOR_ATTEN)]_VertexColorAttenOn("_VertexColorAttenOn",float) = 1
+
+        [Header(Fresnel)]
         [Toggle(_APPLY_FRESNEL)]_ApplyFresnel("_ApplyFresnel",int) = 0
+        _FresnelMin("_FresnelMin",range(0,1))=0.5
+        _FresnelMax("_FresnelMax",range(0,1))=0.9
 
         [Header(Noise Map)]    
         _NoiseMap("_NoiseMap",2d) = "bump"{}
@@ -39,6 +43,11 @@ Shader "Unlit/OutlineOnly"
         Tags { "RenderType"="Transparent" "Queue"="Transparent"}
         LOD 100
         blend [_SrcMode][_DstMode]
+
+        // pass{
+        //     colorMask 0
+        //     zwrite on
+        // }
 
         Pass
         {
