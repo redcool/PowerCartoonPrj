@@ -79,7 +79,11 @@ v2f vert (appdata v)
 
     float2 outlineOffset = (normalClip.xy) * _Width * 0.1 * lerp(1,o.vertex.w,_KeepWidth);
     outlineOffset *= MUL_VERTEX_COLOR_ATTEN(v);
-    outlineOffset *= smoothstep(0.,0.3,saturate(v.vertex.y - _WidthLocalYAtten));
+    
+    // local y atten
+    float3 vertexRotated = mul((float3x3)unity_ObjectToWorld,v.vertex);
+    outlineOffset *= smoothstep(0.,0.2,saturate(vertexRotated.y - _WidthLocalYAtten));
+
     o.vertex.xy += outlineOffset;
 
     o.color = v.color;
