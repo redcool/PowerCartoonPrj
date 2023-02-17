@@ -42,7 +42,7 @@ Material:
     - _DstMode: 10
     - _FresnelMax: 0.603
     - _FresnelMin: 0.315
-    - _KeepWidth: 0
+    - _KeepWidth: 1
     - _NoiseAlphaBase: -0.296
     - _NoiseAlphaScale: 0.5
     - _NoiseIntensity: 3.41
@@ -56,8 +56,8 @@ Material:
     - _SrcMode: 5
     - _VertexColorAttenOn: 0
     - _VertexMoveMode: 1
-    - _Width: 0.3
-    - _WidthLocalYAtten: -0.55
+    - _Width: 0.536
+    - _WidthLocalYAtten: -0.13
     - _ZOffset: 0.9
     m_Colors:
     - _Color: {r: 1, g: 0, b: 0.12034559, a: 1}
