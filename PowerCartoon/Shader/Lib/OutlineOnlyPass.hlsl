@@ -46,6 +46,14 @@ float2 UVOffset(float2 uvOffset,bool autoStop){
     return uvOffset * lerp(_Time.xx,1,autoStop);
 }
 
+void OffsetHClipVertexZ(inout float4 vertex){
+    #if defined(UNITY_REVERSED_Z)
+        vertex.z *= _ZOffset;  //[1,0]
+    #else
+        vertex.z += 1 - _ZOffset; //[-1,1]
+    #endif
+}
+
 v2f vert (appdata v)
 {
     float3 worldPos = mul(unity_ObjectToWorld,v.vertex);
@@ -53,9 +61,8 @@ v2f vert (appdata v)
     float3 viewDir = normalize(UnityWorldSpaceViewDir(worldPos));
     float rnv = 1 - saturate(dot(wn,viewDir));
 
-    float localYAtten = saturate(v.vertex.y - _BaseLocalY);
-    
     #if defined(_NOISE_VERTEX_ON)
+        float localYAtten = saturate(v.vertex.y - _BaseLocalY);
         float noise = tex2Dlod(_NoiseMap,float4(v.uv.xy * _NoiseMap_ST.xy + UVOffset(_NoiseMap_ST.zw,_NoiseWaveAutoStop),0,0));
         noise *= _NoiseWaveScale;
         noise *= localYAtten;
@@ -68,7 +75,8 @@ v2f vert (appdata v)
 
     v2f o;
     o.vertex = TransformObjectToHClip(v.vertex.xyz);
-    o.vertex.z *= _ZOffset;
+    OffsetHClipVertexZ(o.vertex);
+
     o.uv.z = smoothstep(0.,.5,rnv);
 
     float3 normalView = mul((float3x3)UNITY_MATRIX_IT_MV,v.normal);
@@ -79,7 +87,7 @@ v2f vert (appdata v)
 
     float2 outlineOffset = (normalClip.xy) * _Width * 0.1 * lerp(1,o.vertex.w,_KeepWidth);
     outlineOffset *= MUL_VERTEX_COLOR_ATTEN(v);
-    
+     
     // local y atten
     float3 vertexRotated = mul((float3x3)unity_ObjectToWorld,v.vertex);
     outlineOffset *= smoothstep(0.,0.2,saturate(vertexRotated.y - _WidthLocalYAtten));
@@ -99,15 +107,15 @@ half4 frag (v2f i) : SV_Target
     // float noise = GradientNoise(i.uv * _NoiseST.xy + _Time.xx* _NoiseST.zw) ;
     float noise = 0;
     #if defined(_NOISE_MAP_ON)
-    noise = tex2D(_NoiseMap,i.uv * _NoiseMap_ST.xy + UVOffset(_NoiseMap_ST.zw,_NoiseOffsetAutoStop));
+        noise = tex2D(_NoiseMap,i.uv * _NoiseMap_ST.xy + UVOffset(_NoiseMap_ST.zw,_NoiseOffsetAutoStop));
     #endif
     
     float2 uv = i.uv * _OutlineTex_ST.xy + _OutlineTex_ST.zw + noise;
     half4 col = tex2D(_OutlineTex,uv) * _Color * MUL_VERTEX_COLOR_ATTEN(i);
 
     #if defined(_NOISE_MAP_ON)
-    // clip(noise-_NoiseAlphaScale);
-    col.a *= saturate((noise- _NoiseAlphaBase)*_NoiseAlphaScale);
+        // clip(noise-_NoiseAlphaScale);
+        col.a *= saturate((noise- _NoiseAlphaBase)*_NoiseAlphaScale);
     #endif
 
     #if defined(_APPLY_FRESNEL)
@@ -117,7 +125,7 @@ half4 frag (v2f i) : SV_Target
         float rnv = 1-nv;
         float fresnel = smoothstep(_FresnelMin,_FresnelMax,rnv);
 
-    col.a *= fresnel;
+        col.a *= fresnel;
     #endif
     
     return col;
