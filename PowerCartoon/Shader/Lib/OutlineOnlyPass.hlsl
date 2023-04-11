@@ -48,9 +48,9 @@ float2 UVOffset(float2 uvOffset,bool autoStop){
 
 void OffsetHClipVertexZ(inout float4 vertex){
     #if defined(UNITY_REVERSED_Z)
-        vertex.z *= _ZOffset;  //[1,0]
+        vertex.z *= _ZOffset;  //[0,1]=>[1,0]
     #else
-        vertex.z += 1 - _ZOffset; //[-1,1]
+        vertex.z += (1-_ZOffset)* _ProjectionParams.y; //[-1,1]=>[0,1], camera near plane
     #endif
 }
 
