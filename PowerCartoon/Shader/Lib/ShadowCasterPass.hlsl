@@ -28,7 +28,7 @@ half4 GetShadowPositionHClip(appdata input){
     half3 worldNormal = TransformObjectToWorldNormal(input.normal);
 
     #if _CASTING_PUNCTUAL_LIGHT_SHADOW
-    float3 lightDirectionWS = normalize(_LightPosition - positionWS);
+    float3 lightDirectionWS = normalize(_LightPosition - worldPos);
 #else
     float3 lightDirectionWS = _LightDirection;
 #endif
