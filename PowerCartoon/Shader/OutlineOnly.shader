@@ -1,4 +1,4 @@
-Shader "Unlit/OutlineOnly"
+Shader "Character/Unlit/OutlineOnly"
 {
     Properties
     {
