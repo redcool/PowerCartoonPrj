@@ -2,7 +2,6 @@
 #define SHADOW_CASTER_PASS_HLSL
 
 #include "../../../PowerShaderLib/Lib/UnityLib.hlsl"
-#include "PBRInput.hlsl"
 #include "../../../PowerShaderLib/URPLib/URP_MainLightShadows.hlsl"
 
 

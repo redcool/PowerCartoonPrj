@@ -90,6 +90,7 @@ Shader "Character/PowerCartoon"
             #pragma shader_feature_local PRECISION_SHADOW
             #pragma multi_compile_fragment _ _SHADOWS_SOFT
 
+            #include "Lib/PBRInput.hlsl"
             #include "Lib/ForwardPass.hlsl"
             
             ENDHLSL
@@ -108,7 +109,12 @@ Shader "Character/PowerCartoon"
             #pragma multi_compile_vertex _ _CASTING_PUNCTUAL_LIGHT_SHADOW
 
             #define SHADOW_PASS 
-            #include "Lib/ShadowCasterPass.hlsl"
+            #define USE_SAMPLER2D
+            #define _MainTexChannel 3
+            #define _CustomShadowNormalBias _CustomShadowNormalBias
+            #define _CustomShadowDepthBias _CustomShadowDepthBias
+            #include "Lib/PBRInput.hlsl"
+            #include "../../../PowerShaderLib/URPLib/ShadowCasterPass.hlsl"
 
             ENDHLSL
         }
@@ -120,9 +126,11 @@ Shader "Character/PowerCartoon"
             ColorMask 0
             HLSLPROGRAM
             #pragma vertex vert
-            #pragma fragment frag 
+            #pragma fragment frag
 
-            #include "Lib/ShadowCasterPass.hlsl"
+            #define USE_SAMPLER2D
+            #include "Lib/PBRInput.hlsl"
+            #include "../../../PowerShaderLib/URPLib/ShadowCasterPass.hlsl"
 
             ENDHLSL
         }

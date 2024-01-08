@@ -1,7 +1,6 @@
 #if !defined(FORWARD_PASS_HLSL)
 #define FORWARD_PASS_HLSL
 
-#include "PBRInput.hlsl"
 #include "../../../PowerShaderLib/Lib/BSDF.hlsl"
 #include "../../../PowerShaderLib/URPLib/URP_GI.hlsl"
 #include "../../../PowerShaderLib/URPLib/URP_MainLightShadows.hlsl"
