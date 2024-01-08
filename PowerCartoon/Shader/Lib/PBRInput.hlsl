@@ -32,7 +32,7 @@ half _CustomLightOn;
 half3 _LightDirOffset, _CustomLightColor;
 half3 _ViewDirOffset;
 
-half _ReceiveShadow;
+half _ReceiveShadowOff;
 half _MainLightShadowSoftScale;
 half _CustomShadowDepthBias,_CustomShadowNormalBias;
 

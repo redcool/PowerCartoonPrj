@@ -28,7 +28,7 @@ struct v2f
 
 v2f vert (appdata v)
 {
-    v2f o;
+    v2f o = (v2f)0;
     float3 worldPos = TransformObjectToWorld(v.vertex.xyz);
     o.vertex = TransformWorldToHClip(worldPos);
     o.uv = v.uv;
@@ -40,7 +40,7 @@ v2f vert (appdata v)
     o.tSpace0 = float4(t.x,b.x,n.x,worldPos.x);
     o.tSpace1 = float4(t.y,b.y,n.y,worldPos.y);
     o.tSpace2 = float4(t.z,b.z,n.z,worldPos.z);
-    #if ! defined(PRECISION_SHADOW)
+    #if !defined(_RECEIVE_SHADOWS_OFF) && !defined(PRECISION_SHADOW)
     o.shadowCoord = TransformWorldToShadowCoord(worldPos);
     #endif
     return o;
@@ -68,7 +68,7 @@ half4 frag (v2f i) : SV_Target
     i.shadowCoord = TransformWorldToShadowCoord(worldPos);
     #endif
 
-    float shadowAtten = CalcShadow(i.shadowCoord,worldPos,0,_ReceiveShadow,_MainLightShadowSoftScale);
+    float shadowAtten = CalcShadow(i.shadowCoord,worldPos,0,_ReceiveShadowOff,_MainLightShadowSoftScale);
 
     float3 l = GetWorldSpaceLightDir(worldPos) + _LightDirOffset;
     float3 v = normalize(GetWorldSpaceViewDir(worldPos) + _ViewDirOffset);

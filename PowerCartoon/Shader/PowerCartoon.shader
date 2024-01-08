@@ -49,9 +49,9 @@ Shader "Character/PowerCartoon"
         [GroupItem(Custom View)]_ViewDirOffset("_ViewDirOffset",vector) = (0,0,0,0)
 
         [Group(Shadow)]
-        [GroupToggle(Shadow,_RECEIVE_SHADOWS_ON)]_ReceiveShadow("_ReceiveShadow",int) = 1
-        [GroupToggle(Shadow,PRECISION_SHADOW)]_PrecisionShadow("_PrecisionShadow",int) = 1
-        [GroupToggle(Shadow,_SHADOWS_SOFT)]_SoftShadowOn("_SoftShadowOn",int) = 1
+        [GroupToggle(Shadow,_RECEIVE_SHADOWS_OFF)]_ReceiveShadowOff("_ReceiveShadowOff",int) = 0
+        [GroupToggle(Shadow,PRECISION_SHADOW,calc shadowCoord in ps)]_PrecisionShadow("_PrecisionShadow",int) = 0
+        // [GroupToggle(Shadow,_SHADOWS_SOFT)]_SoftShadowOn("_SoftShadowOn",int) = 0 // urp asset
         [GroupItem(Shadow)]_MainLightShadowSoftScale("_MainLightShadowSoftScale",Range(0,2))=0.1
         [GroupItem(Shadow)]_CustomShadowDepthBias("_CustomShadowDepthBias",range(-1,1)) = 0
         [GroupItem(Shadow)]_CustomShadowNormalBias("_CustomShadowNormalBias",range(-1,1)) = 0
@@ -79,15 +79,16 @@ Shader "Character/PowerCartoon"
             #pragma vertex vert
             #pragma fragment frag
 
-            #pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
+            #pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE //_MAIN_LIGHT_SHADOWS_SCREEN
             #pragma multi_compile_fragment _ _ADDITIONAL_LIGHTS_ON
 
             #pragma shader_feature_fragment _PRESSS
             #pragma shader_feature_fragment _RIMON
-            #pragma shader_feature_local_fragment PRECISION_SHADOW
             #pragma shader_feature_fragment _EMISSION
-            #pragma shader_feature _RECEIVE_SHADOWS_ON
-            #pragma shader_feature_fragment _SHADOWS_SOFT
+
+            #pragma shader_feature _RECEIVE_SHADOWS_OFF
+            #pragma shader_feature_local PRECISION_SHADOW
+            #pragma multi_compile_fragment _ _SHADOWS_SOFT
 
             #include "Lib/ForwardPass.hlsl"
             
