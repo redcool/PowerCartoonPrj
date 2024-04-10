@@ -2,6 +2,8 @@
 #define OUTLINE_ONLY_PASS_HLSL
 #include "../../../PowerShaderLib/Lib/UnityLib.hlsl"
 #include "../../../PowerShaderLib/Lib/NoiseLib.hlsl"
+#include "../../../PowerShaderLib/Lib/MathLib.hlsl"
+#include "../../../PowerShaderLib/Lib/PowerUtils.hlsl"
 
 struct appdata
 {
@@ -29,6 +31,7 @@ half4 _Color;
 half4 _OutlineTex_ST;
 half _VertexColorAttenOn;
 half _ZOffset;
+half _ObjectScale;
 
 half _FresnelMin,_FresnelMax;
 
@@ -42,17 +45,17 @@ CBUFFER_END
 
 #define MUL_VERTEX_COLOR_ATTEN(v) (_VertexColorAttenOn? v.color.x : 1)
 
-float2 UVOffset(float2 uvOffset,bool autoStop){
-    return uvOffset * lerp(_Time.xx,1,autoStop);
-}
+// float2 UVOffset(float2 uvOffset,bool autoStop){
+//     return uvOffset * lerp(_Time.xx,1,autoStop);
+// }
 
-void OffsetHClipVertexZ(inout float4 vertex){
-    #if defined(UNITY_REVERSED_Z)
-        vertex.z *= _ZOffset;  //[0,1]=>[1,0]
-    #else
-        vertex.z += (1-_ZOffset)* _ProjectionParams.y; //[-1,1]=>[0,1], camera near plane
-    #endif
-}
+// void OffsetHClipVertexZ(inout float4 vertex){
+//     #if defined(UNITY_REVERSED_Z)
+//         vertex.z *= _ZOffset;  //[0,1]=>[1,0]
+//     #else
+//         vertex.z += (1-_ZOffset)* _ProjectionParams.y; //[-1,1]=>[0,1], camera near plane
+//     #endif
+// }
 
 v2f vert (appdata v)
 {
@@ -74,8 +77,8 @@ v2f vert (appdata v)
     #endif
 
     v2f o;
-    o.vertex = TransformObjectToHClip(v.vertex.xyz);
-    OffsetHClipVertexZ(o.vertex);
+    o.vertex = TransformObjectToHClip(v.vertex.xyz  * _ObjectScale);
+    OffsetHClipVertexZ(o.vertex,_ZOffset);
 
     o.uv.z = smoothstep(0.,.5,rnv);
 
