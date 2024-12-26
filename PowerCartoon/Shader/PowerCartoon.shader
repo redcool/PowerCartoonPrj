@@ -2,7 +2,7 @@ Shader "Character/PowerCartoon"
 {
     Properties
     {
-        [GroupHeader(v2.0.2)]
+        [GroupHeader(v2.0.4)]
         [Group(Main )]
         [GroupItem(Main)]_MainTex ("Texture", 2D) = "white" {}
         [GroupItem(Main)]_BaseColor ("_BaseColor", color) = (1,1,1,1)
@@ -14,7 +14,7 @@ Shader "Character/PowerCartoon"
         [GroupItem(Main)] _Illumination("_Illumination",float) = 1
         // [GroupItem(Main)] _Constract("_Constract",range(0,1)) = 1
 
-        [GroupHeader(Main,HeightColor)]
+        [GroupHeader(Main,Topdown Colors)]
         [GroupItem(Main,)] _BelowColor("_BelowColor",color) = (1,1,1,1)
         [GroupVectorSlider(Main,min max,0_1 0_1)] _ColorRate("_ColorRate",vector) = (0,1,1,1)
         [GroupItem(Main,contrn blend belowColor baseColor)] _VertexY("_VertexY",float) = 1
