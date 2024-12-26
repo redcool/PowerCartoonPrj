@@ -22,7 +22,7 @@ struct v2f
     float4 tSpace2:TEXCOORD3;
 
     float4 shadowCoord:TEXCOORD4;
-
+    float4 vertexHeight:TEXCOORD5;
 };
 
 v2f vert (appdata v)
@@ -42,6 +42,7 @@ v2f vert (appdata v)
     #if !defined(_RECEIVE_SHADOWS_OFF) && !defined(PRECISION_SHADOW)
     o.shadowCoord = TransformWorldToShadowCoord(worldPos);
     #endif
+    o.vertexHeight.w = v.vertex.y;
     return o;
 }
 
@@ -49,6 +50,8 @@ v2f vert (appdata v)
 
 half4 frag (v2f i) : SV_Target
 {
+    float vertexY = i.vertexHeight.w;
+
     float3 vertexTangent = (float3(i.tSpace0.x,i.tSpace1.x,i.tSpace2.x));
     float3 vertexBinormal = normalize(float3(i.tSpace0.y,i.tSpace1.y,i.tSpace2.y));
     float3 vertexNormal = normalize(float3(i.tSpace0.z,i.tSpace1.z,i.tSpace2.z));
@@ -74,7 +77,7 @@ half4 frag (v2f i) : SV_Target
     float3 h = normalize(l+v);
     float nl = saturate(dot(n,l));
     float originalNL = nl;
-    half3 mainLightColor = lerp(_MainLightColor,_CustomLightColor,_CustomLightOn);
+    half3 mainLightColor = _CustomLightOn? _CustomLightColor : _MainLightColor;//lerp(_MainLightColor,_CustomLightColor,_CustomLightOn);
 
     // diffuse smooth
     // nl = smoothstep(_DiffuseStepMin,_DiffuseStepMax,nl);
@@ -106,7 +109,16 @@ half4 frag (v2f i) : SV_Target
     float metallic = _Metallic * pbrMask.x;
     float occlusion = lerp(1,pbrMask.b,_Occlusion);
 
-    half4 mainTex = tex2D(_MainTex, i.uv) * _BaseColor;
+    // top down colors
+    #if defined(TOPDOWN_COLORS)
+    float yRate = saturate(vertexY - _VertexY);
+    yRate = smoothstep(_ColorRate.x,_ColorRate.y,yRate);
+    half4 baseColor = lerp(_BelowColor,_BaseColor,yRate);
+    #else
+    half4 baseColor = _BaseColor;
+    #endif
+
+    half4 mainTex = tex2D(_MainTex, i.uv) * baseColor;
     half3 albedo = mainTex.xyz;
     
     albedo = lerp(dot(half3(.29,0.58,0.14),albedo),albedo,_Saturate);

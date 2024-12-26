@@ -15,6 +15,9 @@ half4 _MainTex_ST;
 half4 _BaseColor;
 half _Smoothness, _Metallic,_Occlusion;
 half _Saturate,_Illumination;//_Constract;
+half _VertexY;
+half2 _ColorRate;
+half4 _BelowColor;
 
 half _NormalScale;
 

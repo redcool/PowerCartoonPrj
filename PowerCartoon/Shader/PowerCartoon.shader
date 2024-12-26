@@ -14,6 +14,11 @@ Shader "Character/PowerCartoon"
         [GroupItem(Main)] _Illumination("_Illumination",float) = 1
         // [GroupItem(Main)] _Constract("_Constract",range(0,1)) = 1
 
+        [GroupHeader(Main,HeightColor)]
+        [GroupItem(Main,)] _BelowColor("_BelowColor",color) = (1,1,1,1)
+        [GroupVectorSlider(Main,min max,0_1 0_1)] _ColorRate("_ColorRate",vector) = (0,1,1,1)
+        [GroupItem(Main,contrn blend belowColor baseColor)] _VertexY("_VertexY",float) = 1
+
         [Group(PBR Mask)]
         [GroupItem(PBR Mask)]_PBRMask("_PBRMask(Metallix:r,Smoothness:g,Occlusion:b)",2d) = "white"{}
         [GroupItem(PBR Mask)]_Metallic("_Metallic",range(0,1)) = 0.5
@@ -94,6 +99,8 @@ Shader "Character/PowerCartoon"
             #pragma shader_feature _RECEIVE_SHADOWS_OFF
             #pragma shader_feature_local PRECISION_SHADOW
             #pragma multi_compile_fragment _ _SHADOWS_SOFT
+
+            #define TOPDOWN_COLORS
 
             #include "Lib/PBRInput.hlsl"
             #include "Lib/ForwardPass.hlsl"
