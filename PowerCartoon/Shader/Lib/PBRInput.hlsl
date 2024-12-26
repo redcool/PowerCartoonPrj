@@ -14,6 +14,7 @@ CBUFFER_START(UnityPerMaterial)
 half4 _MainTex_ST;
 half4 _BaseColor;
 half _Smoothness, _Metallic,_Occlusion;
+half _Saturate,_Illumination;//_Constract;
 
 half _NormalScale;
 

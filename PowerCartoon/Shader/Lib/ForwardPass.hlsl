@@ -108,6 +108,11 @@ half4 frag (v2f i) : SV_Target
 
     half4 mainTex = tex2D(_MainTex, i.uv) * _BaseColor;
     half3 albedo = mainTex.xyz;
+    
+    albedo = lerp(dot(half3(.29,0.58,0.14),albedo),albedo,_Saturate);
+    albedo = lerp(0,albedo,_Illumination);
+    // albedo = lerp(0.5,albedo,_Constract);
+
     half alpha = mainTex.w;
 
     half3 diffColor = albedo * (1 - metallic);

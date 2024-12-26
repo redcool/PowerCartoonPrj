@@ -9,6 +9,11 @@ Shader "Character/PowerCartoon"
         [GroupItem(Main)]_NormalMap("_NormalMap",2d) = "bump"{}
         [GroupItem(Main)]_NormalScale("_NormalScale",float) = 1
 
+        [GroupHeader(Main,Color)]
+        [GroupItem(Main)] _Saturate("_Saturate",float) = 1
+        [GroupItem(Main)] _Illumination("_Illumination",float) = 1
+        // [GroupItem(Main)] _Constract("_Constract",range(0,1)) = 1
+
         [Group(PBR Mask)]
         [GroupItem(PBR Mask)]_PBRMask("_PBRMask(Metallix:r,Smoothness:g,Occlusion:b)",2d) = "white"{}
         [GroupItem(PBR Mask)]_Metallic("_Metallic",range(0,1)) = 0.5
@@ -41,7 +46,7 @@ Shader "Character/PowerCartoon"
         [GroupItem(RimAdd)]_RimStepMax("_RimStepMax",range(0,1)) = 1
 
         [Group(Custom Light)]
-        [GroupItem(Custom Light)]_CustomLightOn("_CustomLightOn",int)= 0
+        [GroupToggle(Custom Light)]_CustomLightOn("_CustomLightOn",int)= 0
         [GroupItem(Custom Light)]_LightDirOffset("_LightDirOffset",vector)=(0,0,0,0)
         [GroupItem(Custom Light)]_CustomLightColor("_CustomLightColor",color)=(1,1,1,1)
 
