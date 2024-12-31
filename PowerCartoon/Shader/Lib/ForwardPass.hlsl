@@ -98,7 +98,7 @@ half4 frag (v2f i) : SV_Target
     float lh = saturate(dot(l,h));
 
     // pbrmask
-    half4 pbrMask = tex2D(_PBRMask,i.uv);
+    half4 pbrMask = tex2D(_PbrMask,i.uv);
 
     float smoothness = _Smoothness * pbrMask.y;
     float roughness = 1 - smoothness;
@@ -113,20 +113,27 @@ half4 frag (v2f i) : SV_Target
     #if defined(TOPDOWN_COLORS)
     float yRate = saturate(vertexY - _VertexY);
     yRate = smoothstep(_ColorRate.x,_ColorRate.y,yRate);
-    half4 baseColor = lerp(_BelowColor,_BaseColor,yRate);
+    half4 baseColor = lerp(_BelowColor,_Color,yRate);
     #else
-    half4 baseColor = _BaseColor;
+    half4 baseColor = _Color;
     #endif
 
     half4 mainTex = tex2D(_MainTex, i.uv) * baseColor;
     half3 albedo = mainTex.xyz;
+    half alpha = mainTex.w;
     
+    // -------------------
+    albedo *= _AlphaPremultiply ? alpha : 1;
+    // color tint
     albedo = lerp(dot(half3(.29,0.58,0.14),albedo),albedo,_Saturate);
     albedo = lerp(0,albedo,_Illumination);
     // albedo = lerp(0.5,albedo,_Constract);
 
-    half alpha = mainTex.w;
-
+//-------- clip
+    #if defined(ALPHA_TEST)
+        clip(alpha - _Cutoff);
+    #endif
+    
     half3 diffColor = albedo * (1 - metallic);
     half3 specColor = lerp(0.04,albedo,metallic);
 
@@ -146,6 +153,7 @@ half4 frag (v2f i) : SV_Target
     // giSpec *= _GISpecIntensity;
 
     half4 col = 0;
+    col.w = alpha;
     col.xyz = (giDiff + giSpec) * occlusion;
 
     half3 radiance = nl * mainLightColor * shadowAtten;

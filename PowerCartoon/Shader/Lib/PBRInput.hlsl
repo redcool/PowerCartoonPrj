@@ -4,7 +4,7 @@
 #include "../../../PowerShaderLib/Lib/MaskLib.hlsl"
 
 sampler2D _MainTex;
-sampler2D _PBRMask;
+sampler2D _PbrMask;
 // samplerCUBE unity_SpecCube0;
 sampler2D _NormalMap;
 sampler2D _ScatterLUT;
@@ -12,7 +12,7 @@ sampler2D _EmissionMap;
 
 CBUFFER_START(UnityPerMaterial)
 half4 _MainTex_ST;
-half4 _BaseColor;
+half4 _Color;
 half _Smoothness, _Metallic,_Occlusion;
 half _Saturate,_Illumination;//_Constract;
 half _VertexY;
@@ -40,8 +40,13 @@ half _ReceiveShadowOff;
 half _MainLightShadowSoftScale;
 half _CustomShadowDepthBias,_CustomShadowNormalBias;
 
+half _EmissionOn;
 half4 _EmissionColor;
 half _EmissionMaskFrom,_EmissionMode;
+//----------------------------------------
+half _AlphaPremultiply;
+half _Cutoff;
+
 CBUFFER_END
 
 half CustomShadowDepthBias(){
