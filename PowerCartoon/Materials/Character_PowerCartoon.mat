@@ -9,6 +9,8 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Character_PowerCartoon
   m_Shader: {fileID: 4800000, guid: e1bc73a9f8715f349b2028fe0be7d16b, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _RIMON
   m_InvalidKeywords: []
@@ -18,6 +20,7 @@ Material:
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -26,7 +29,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 6449cd275bde43b4ab6c406536774326, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
@@ -37,22 +40,33 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _PbrMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _ScatterLUT:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _AlphaPremultiply: 0
+    - _ClipOn: 0
+    - _ColorMask: 16
+    - _CullMode: 2
     - _CustomLightOn: 0
     - _CustomShadowDepthBias: 0
     - _CustomShadowNormalBias: 0
+    - _Cutoff: 0.596
     - _DiffuseMin: 0.1
     - _DiffuseStepCount: 1
     - _DiffuseStepMax: 1
     - _DiffuseStepMin: 0
+    - _DstMode: 0
     - _EmissionMaskFrom: 0
     - _EmissionMode: 0
     - _EmissionOn: 0
+    - _Illumination: 1
     - _InkPaintMax: 1
     - _InkPaintMin: 0
     - _InkPaintOn: 0
@@ -61,12 +75,15 @@ Material:
     - _NormalScale: 1
     - _Occlusion: 0
     - _PreScatterMaskUseMainTexA: 0
-    - _PrecisionShadow: 1
+    - _PrecisionShadow: 0
+    - _PresetBlendMode: 0
     - _ReceiveShadow: 1
+    - _ReceiveShadowOff: 0
     - _RimOn: 1
     - _RimReceiveMainLightColor: 0
     - _RimStepMax: 1
     - _RimStepMin: 0
+    - _Saturate: 1
     - _ScatterCurve: 0
     - _ScatterIntensity: 1
     - _ScatterOn: 0
@@ -74,8 +91,20 @@ Material:
     - _SoftShadowOn: 1
     - _SpecStepMax: 1
     - _SpecStepMin: 0
+    - _SrcMode: 1
+    - _Stencil: 0
+    - _StencilComp: 0
+    - _StencilOp: 0
+    - _StencilReadMask: 255
+    - _StencilWriteMask: 255
+    - _VertexY: 1
+    - _ZTestMode: 4
+    - _ZWriteMode: 1
     m_Colors:
-    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 0.65882355}
+    - _BelowColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _ColorRate: {r: 0, g: 1, b: 1, a: 1}
     - _CustomLightColor: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
     - _InkPaintColor: {r: 0, g: 0, b: 0, a: 0}

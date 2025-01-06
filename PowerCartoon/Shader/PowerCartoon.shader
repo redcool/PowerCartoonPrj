@@ -15,6 +15,7 @@ Shader "Character/PowerCartoon"
         // [GroupItem(Main)] _Constract("_Constract",range(0,1)) = 1
 
         [GroupHeader(Main,Topdown Colors)]
+        [GroupToggle(Main,)] _BelowColorOn("_BelowColorOn",float) = 0
         [GroupItem(Main,)] _BelowColor("_BelowColor",color) = (1,1,1,1)
         [GroupVectorSlider(Main,min max,0_1 0_1)] _ColorRate("_ColorRate",vector) = (0,1,1,1)
         [GroupItem(Main,contrn blend belowColor baseColor)] _VertexY("_VertexY",float) = 1
