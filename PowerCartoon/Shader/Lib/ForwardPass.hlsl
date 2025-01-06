@@ -76,26 +76,25 @@ half4 frag (v2f i) : SV_Target
     float3 v = normalize(GetWorldSpaceViewDir(worldPos) + _ViewDirOffset);
     float3 h = normalize(l+v);
     float nl = saturate(dot(n,l));
-    float originalNL = nl;
-    half3 mainLightColor = _CustomLightOn? _CustomLightColor : _MainLightColor;//lerp(_MainLightColor,_CustomLightColor,_CustomLightOn);
-
-    // diffuse smooth
-    // nl = smoothstep(_DiffuseStepMin,_DiffuseStepMax,nl);
-    // diffuse step smooth
-    float idNL = floor(nl * _DiffuseStepCount);
-    float idF = frac(nl * _DiffuseStepCount);
-    nl = lerp(idNL,idNL+1,smoothstep(_DiffuseStepMin,_DiffuseStepMax,idF))/ _DiffuseStepCount;
-    // return nl;
-
-    
-    nl = max(_DiffuseMin,nl);
-
     // pbr
     float nv = saturate(dot(n,v));
     float nh = saturate(dot(n,h));
     // nh = smoothstep(_SpecStepMin,_SpecStepMax,nh);
     // return nh;    
     float lh = saturate(dot(l,h));
+
+    half3 mainLightColor = _CustomLightOn? _CustomLightColor : _MainLightColor;//lerp(_MainLightColor,_CustomLightColor,_CustomLightOn);
+
+    // diffuse step smooth
+    float originalNL = nl;
+    float nlId = floor(nl * _DiffuseStepCount);
+    float nlRate = frac(nl * _DiffuseStepCount);
+    nl = lerp(nlId,nlId+1,smoothstep(_DiffuseStepMin,_DiffuseStepMax,nlRate))/ _DiffuseStepCount;
+    // apply 
+    nl = lerp(nl,nv,_FaceDiffuse);
+
+    nl = (max(_DiffuseMin,nl));
+    // return nl;
 
     // pbrmask
     half4 pbrMask = tex2D(_PbrMask,i.uv);
@@ -108,6 +107,7 @@ half4 frag (v2f i) : SV_Target
 
     float metallic = _Metallic * pbrMask.x;
     float occlusion = lerp(1,pbrMask.b,_Occlusion);
+
 
     // top down colors
     #if defined(TOPDOWN_COLORS)
@@ -155,6 +155,15 @@ half4 frag (v2f i) : SV_Target
     half4 col = 0;
     col.w = alpha;
     col.xyz = (giDiff + giSpec) * occlusion;
+
+
+    // ============ face shadow atten
+    #if defined(FACE_SHADOW_ATTEN_MASK)
+    float faceShadowMask = pbrMask.a * _AlphaFaceShadowMask;
+    shadowAtten = lerp(shadowAtten,1, faceShadowMask);
+    
+
+    #endif 
 
     half3 radiance = nl * mainLightColor * shadowAtten;
     float specTerm = MinimalistCookTorrance(nh,lh,a,a2);

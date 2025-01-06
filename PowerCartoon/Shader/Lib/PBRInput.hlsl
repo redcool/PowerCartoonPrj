@@ -14,6 +14,7 @@ CBUFFER_START(UnityPerMaterial)
 half4 _MainTex_ST;
 half4 _Color;
 half _Smoothness, _Metallic,_Occlusion;
+half _AlphaFaceShadowMask,_FaceDiffuse;
 half _Saturate,_Illumination;//_Constract;
 half _VertexY;
 half2 _ColorRate;

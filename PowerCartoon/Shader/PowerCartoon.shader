@@ -2,7 +2,7 @@ Shader "Character/PowerCartoon"
 {
     Properties
     {
-        [GroupHeader(v2.0.5)]
+        [GroupHeader(v2.0.6)]
         [Group(Main )]
         [GroupItem(Main)]_MainTex ("Texture", 2D) = "white" {}
         [GroupItem(Main)]_Color ("_Color", color) = (1,1,1,1)
@@ -24,6 +24,9 @@ Shader "Character/PowerCartoon"
         [GroupItem(PBR Mask)]_Metallic("_Metallic",range(0,1)) = 0.5
         [GroupItem(PBR Mask)]_Smoothness("_Smoothness",range(0,1)) = 0.5
         [GroupItem(PBR Mask)]_Occlusion("_Occlusion",range(0,1)) = 0
+        
+        [GroupHeader(FaceShadowAttenMask)]
+        [GroupItem(PBR Mask)]_AlphaFaceShadowMask("_AlphaFaceShadowMask",range(0,1)) = 0
 
         [Group(Diffuse Step)]
         [GroupItem(Diffuse Step)]_DiffuseMin("_DiffuseMin",range(0,1)) = 0.1
@@ -31,6 +34,9 @@ Shader "Character/PowerCartoon"
         [GroupItem(Diffuse Step)]_DiffuseStepMax("_DiffuseStepMax",range(0,1)) = 1
         [GroupItem(Diffuse Step)]_DiffuseStepCount("_DiffuseStepCount",range(1,5)) = 1
 
+        [GroupHeader(Face Diffuse)]
+        [GroupItem(PBR Mask)]_FaceDiffuse("_FaceDiffuse",range(0,1)) = 0
+        
         [Group(Spec Step)]
         [GroupItem(Spec Step)]_SpecStepMin("_SpecStepMin",range(0,1)) = 0
         [GroupItem(Spec Step)]_SpecStepMax("_SpecStepMax",range(0,1)) = 1
@@ -153,6 +159,7 @@ Shader "Character/PowerCartoon"
             #pragma multi_compile_fragment _ _SHADOWS_SOFT
 
             #define TOPDOWN_COLORS
+            #define FACE_SHADOW_ATTEN_MASK
 
             #include "Lib/PBRInput.hlsl"
             #include "Lib/ForwardPass.hlsl"
