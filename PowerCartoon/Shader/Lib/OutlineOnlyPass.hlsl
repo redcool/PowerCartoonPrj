@@ -76,7 +76,7 @@ v2f vert (appdata v)
         v.vertex.xyz += lerp(normalVertex,dirVertex,_VertexMoveMode);
     #endif
 
-    v2f o;
+    v2f o = (v2f)0;
     o.vertex = TransformObjectToHClip(v.vertex.xyz  * _ObjectScale);
     OffsetHClipVertexZ(o.vertex,_ZOffset);
 
@@ -85,10 +85,10 @@ v2f vert (appdata v)
     float3 normalView = mul((float3x3)UNITY_MATRIX_IT_MV,v.normal);
     float3 normalClip = normalize(TransformViewToProjection(normalView));
 
-    float aspect = _ScreenParams.y/_ScreenParams.x;
+    float aspect = _ScaledScreenParams.y/_ScaledScreenParams.x;
     normalClip.x *= aspect;
 
-    float2 outlineOffset = (normalClip.xy) * _Width * 0.1 * lerp(1,o.vertex.w,_KeepWidth);
+    float2 outlineOffset = (normalClip.xy) * _Width * .1 * lerp(1,o.vertex.w,_KeepWidth);
     outlineOffset *= MUL_VERTEX_COLOR_ATTEN(v);
      
     // local y atten

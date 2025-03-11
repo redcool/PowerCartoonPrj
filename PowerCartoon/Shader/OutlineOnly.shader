@@ -60,12 +60,16 @@ Shader "Character/Unlit/OutlineOnly"
 		*/
 		[GroupEnum(Settings,UnityEngine.Rendering.CompareFunction)]_ZTestMode("_ZTestMode",float) = 4
         [GroupEnum(Settings,UnityEngine.Rendering.CullMode)]_CullMode("_CullMode",int) = 2
-
+        [Header(Color Mask)]
+        [GroupEnum(_,RGBA 16 RGB 15 RG 12 GB 6 RB 10 R 8 G 4 B 2 A 1 None 0)] _ColorMask("_ColorMask",int) = 15
         // ================================================== stencil settings
         [Group(Stencil)]
         [GroupEnum(Stencil,UnityEngine.Rendering.CompareFunction)] _StencilComp ("Stencil Comparison", Float) = 0
         [GroupItem(Stencil)] _Stencil ("Stencil ID", int) = 0
         [GroupEnum(Stencil,UnityEngine.Rendering.StencilOp)] _StencilOp ("Stencil Operation", Float) = 0
+        [GroupHeader(Stencil,)]
+        [GroupEnum(Stencil,UnityEngine.Rendering.StencilOp)] _StencilFailOp ("Stencil Fail Operation", Float) = 0
+        [GroupEnum(Stencil,UnityEngine.Rendering.StencilOp)] _StencilZFailOp ("Stencil zfail Operation", Float) = 0
         [GroupItem(Stencil)] _StencilWriteMask ("Stencil Write Mask", Float) = 255
         [GroupItem(Stencil)] _StencilReadMask ("Stencil Read Mask", Float) = 255
     }
@@ -80,12 +84,15 @@ Shader "Character/Unlit/OutlineOnly"
             zwrite[_ZWriteMode]
             ztest[_ZTestMode]
             cull [_CullMode]
+            ColorMask [_ColorMask]
 
             Stencil
             {
                 Ref [_Stencil]
                 Comp [_StencilComp]
                 Pass [_StencilOp]
+                Fail [_StencilFailOp]
+                ZFail [_StencilZFailOp]
                 ReadMask [_StencilReadMask]
                 WriteMask [_StencilWriteMask]
             }
